@@ -101,3 +101,31 @@ class NameChanger(BaseEstimator, TransformerMixin):
         X_copy = X.copy()
         X_copy.columns = self.column_names
         return X_copy
+
+
+class MakeDummies(BaseEstimator, TransformerMixin):
+    """
+    For categorical features, make dummies and
+    concatentate them with the original dataframe.
+    """
+    def __init__(self, attr_names: List) -> None:
+        """
+        Takes a list of attr_names.
+        """
+        self.attr_names = attr_names
+
+    def fit(self, X: pd.core.frame.DataFrame) -> 'MakeDummies':
+        """
+        Made available for fit_transform.
+        """
+        return self
+
+    def transform(self, X: pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
+        """
+        Transform the selected columns into separate binary columns,
+        drop the originals, and concatenate them to the original dataframe.
+        """
+        X_copy = X.copy()
+        dummies = pd.get_dummies(X_copy[self.attr_names])
+        return pd.concat([X_copy.drop(self.attr_names, axis=1),
+                          dummies])
