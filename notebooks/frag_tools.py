@@ -108,11 +108,15 @@ class MakeDummies(BaseEstimator, TransformerMixin):
     For categorical features, make dummies and
     concatentate them with the original dataframe.
     """
-    def __init__(self, attr_names: List) -> None:
+    def __init__(self, attr_names: List, col_names: List) -> None:
         """
-        Takes a list of attr_names.
+        Takes a list of attr_names and col_names.
+        The order of the column names should correspond
+        to the expected ordering of the dummie columns.
+        Assumes the user has done preliminary data exploration.
         """
         self.attr_names = attr_names
+        self.col_names = col_names
 
     def fit(self, X: pd.core.frame.DataFrame) -> 'MakeDummies':
         """
@@ -126,6 +130,7 @@ class MakeDummies(BaseEstimator, TransformerMixin):
         drop the originals, and concatenate them to the original dataframe.
         """
         X_copy = X.copy()
-        dummies = pd.get_dummies(X_copy[self.attr_names])
+        dummies = pd.get_dummies(X_copy[self.attr_names],
+                                 columns=self.col_names)
         return pd.concat([X_copy.drop(self.attr_names, axis=1),
                           dummies])
