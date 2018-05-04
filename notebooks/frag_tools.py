@@ -134,3 +134,28 @@ class MakeDummies(BaseEstimator, TransformerMixin):
                                  columns=self.col_names)
         return pd.concat([X_copy.drop(self.attr_names, axis=1),
                           dummies])
+
+
+class DropColumns(BaseEstimator, TransformerMixin):
+    """
+    Drop columns from the final transformed df.
+    """
+    def __init__(self, column_names: List) -> None:
+        """
+        Return a dataframe that drops the columns.
+        """
+        self.column_names = column_names
+
+    def fit(self, X: pd.core.frame.DataFrame) -> 'MakeDummies':
+        """
+        Made available for fit_transform.
+        """
+        return self
+
+    def transform(self, X: pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
+        """
+        Drop the columns.
+        """
+        X_copy = X.copy()
+        X_copy.drop(self.column_names, axis=1)
+        return X_copy
