@@ -18,6 +18,10 @@
 - Figure out what all I want to show on the dashboard.
 - Figure out D3 transitions.
 
+#### Modeling
+- Pipelines
+- Splines
+- Scalers
 
 #### GitHub
 - Readme write up. A _good_ one.
