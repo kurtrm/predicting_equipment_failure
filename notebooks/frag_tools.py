@@ -108,7 +108,7 @@ class MakeDummies(BaseEstimator, TransformerMixin):
     For categorical features, make dummies and
     concatentate them with the original dataframe.
     """
-    def __init__(self, attr_names: List, col_names: List) -> None:
+    def __init__(self, attr_names: List) -> None:
         """
         Takes a list of attr_names and col_names.
         The order of the column names should correspond
@@ -116,7 +116,6 @@ class MakeDummies(BaseEstimator, TransformerMixin):
         Assumes the user has done preliminary data exploration.
         """
         self.attr_names = attr_names
-        self.col_names = col_names
         self._daysofweek = ['Monday',
                             'Tuesday',
                             'Wednesday',
@@ -139,6 +138,9 @@ class MakeDummies(BaseEstimator, TransformerMixin):
         if 'day-of-week' in self.attr_names:
             dummies = dummies.rename(columns={f'day-of-week_{i}': day
                                               for i, day in enumerate(self._daysofweek, 1)})
+        if 'Operator' in self.attr_names:
+            dummies = dummies.rename(columns={f'Operator_Operator{i}': f'Operator{i}'
+                                              for i in range(1, 9)})
         return dummies
 
 
