@@ -125,7 +125,6 @@ class MakeDummies(BaseEstimator, TransformerMixin):
                             'Thursday',
                             'Friday', 'Saturday', 'Sunday']
 
-
     def fit(self, X: pd.core.frame.DataFrame) -> 'MakeDummies':
         """
         Made available for fit_transform.
