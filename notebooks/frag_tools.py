@@ -2,7 +2,8 @@
 Various functions and classes made while developing
 pipelines and/or cleaning data.
 """
-from typing import List
+from typing import List, Text
+
 
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.preprocessing import StandardScaler, LabelBinarizer
@@ -44,7 +45,8 @@ class TargetBinarizer(BaseEstimator, TransformerMixin):
     Scaler meant to except columns from the equipment
     data set.
     """
-    def __init__(self, target_name: List) -> None:
+    def __init__(self, target_name: Text) -> None:
+
         """
         Constructor takes the target name
         to be passed into the dataframe.
@@ -108,7 +110,8 @@ class MakeDummies(BaseEstimator, TransformerMixin):
     For categorical features, make dummies and
     concatentate them with the original dataframe.
     """
-    def __init__(self, attr_names: List, col_names: List) -> None:
+    def __init__(self, attr_names: List) -> None:
+
         """
         Takes a list of attr_names and col_names.
         The order of the column names should correspond
@@ -116,7 +119,12 @@ class MakeDummies(BaseEstimator, TransformerMixin):
         Assumes the user has done preliminary data exploration.
         """
         self.attr_names = attr_names
-        self.col_names = col_names
+        self._daysofweek = ['Monday',
+                            'Tuesday',
+                            'Wednesday',
+                            'Thursday',
+                            'Friday', 'Saturday', 'Sunday']
+
 
     def fit(self, X: pd.core.frame.DataFrame) -> 'MakeDummies':
         """
@@ -130,10 +138,14 @@ class MakeDummies(BaseEstimator, TransformerMixin):
         drop the originals, and concatenate them to the original dataframe.
         """
         X_copy = X.copy()
-        dummies = pd.get_dummies(X_copy[self.attr_names],
-                                 columns=self.col_names)
-        return pd.concat([X_copy.drop(self.attr_names, axis=1),
-                          dummies])
+        dummies = pd.get_dummies(X_copy, columns=self.attr_names)
+        if 'day-of-week' in self.attr_names:
+            dummies = dummies.rename(columns={f'day-of-week_{i}': day
+                                              for i, day in enumerate(self._daysofweek, 1)})
+        if 'Operator' in self.attr_names:
+            dummies = dummies.rename(columns={f'Operator_Operator{i}': f'Operator{i}'
+                                              for i in range(1, 9)})
+        return dummies
 
 
 class DropColumns(BaseEstimator, TransformerMixin):
@@ -157,5 +169,4 @@ class DropColumns(BaseEstimator, TransformerMixin):
         Drop the columns.
         """
         X_copy = X.copy()
-        X_copy.drop(self.column_names, axis=1)
-        return X_copy
+        return X_copy.drop(self.column_names, axis=1)
