@@ -13,8 +13,10 @@ Pumps, compressors, turbines, etc. have operating specifications, but their beha
   - Cost reduction (arguably still a very commercial intent)
 
 ## Data Understanding
+The data was obtained from bigml.com and consists of a year's worth of hourly logs on a piece of equipment. Though the machine and many of the headers have been obfuscated, this dataset replicates the logs that would be taken aboard a submarine or any other US Navy vessel. In addition, any kind of contract work would likely require this kind of obfuscation outside of a naval base, shipyard, or any other repair facility. The only additional data that would have been helpful is system-wide logs, not just logs on a single piece of machinery. Due to the interdependence and interactions of machinery in complex systems like a submarine, parameters from other parts of the system could be predictive for this piece of equipment. For example, a centrifugal pump may not have logs taken regarding bus frequency or voltage, and variations in these parameters may be indicative of failure.
 
 ## Data Preparation
+The data has a time-series element to it, so any relevant columns were extracted with exception of hours_since_failure. Thus, the analysis was split into a time-series analysis and modeling on all other features.
 
 ## Modeling
 
