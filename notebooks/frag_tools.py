@@ -4,6 +4,7 @@ pipelines and/or cleaning data.
 """
 from typing import List, Text
 
+
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.preprocessing import StandardScaler, LabelBinarizer
 
@@ -45,6 +46,7 @@ class TargetBinarizer(BaseEstimator, TransformerMixin):
     data set.
     """
     def __init__(self, target_name: Text) -> None:
+
         """
         Constructor takes the target name
         to be passed into the dataframe.
@@ -109,6 +111,7 @@ class MakeDummies(BaseEstimator, TransformerMixin):
     concatentate them with the original dataframe.
     """
     def __init__(self, attr_names: List) -> None:
+
         """
         Takes a list of attr_names and col_names.
         The order of the column names should correspond
@@ -121,6 +124,7 @@ class MakeDummies(BaseEstimator, TransformerMixin):
                             'Wednesday',
                             'Thursday',
                             'Friday', 'Saturday', 'Sunday']
+
 
     def fit(self, X: pd.core.frame.DataFrame) -> 'MakeDummies':
         """
