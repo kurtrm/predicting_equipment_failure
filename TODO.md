@@ -20,7 +20,8 @@
 
 #### Modeling
 - ~~Pipelines~~
-- Initial data exploration
+- ~~Initial data exploration~~
+- ~~crappy models built~~
 - Splines
 - Scalers
 
