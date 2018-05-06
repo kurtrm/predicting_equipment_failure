@@ -19,7 +19,8 @@
 - Figure out D3 transitions.
 
 #### Modeling
-- Pipelines
+- ~~Pipelines~~
+- Initial data exploration
 - Splines
 - Scalers
 
