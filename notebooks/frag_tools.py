@@ -219,3 +219,31 @@ def geocode_data(addresses: List, to_file: bool=False) -> List:
             json.dump(geocoded, f)
 
     return geocode_data
+
+
+class CleanAddresses(BaseEstimator, TransformerMixin):
+    """
+    Take the addresses from the raw dataframe and combine them.
+    """
+    def fit(self, X: pd.core.frame.DataFrame) -> 'CleanAddresses':
+        """
+        Made available for fit_transform.
+        """
+        return self
+
+    def transform(self, X: pd.core.frame.DataFrame, geocode: bool=False) -> pd.core.frame.DataFrame:
+        """
+        Combine the address columns.
+        """
+        X_copy = X.copy()
+        location_info = X_copy[['AssetLocation',
+                                'AssetCity',
+                                'AssetState',
+                                'AssetZip']]
+        joined_series = location_info.apply(lambda x: ", ".join(x.tolist()),
+                                            axis=1)
+        if geocode:
+            geocode_data(joined_series.tolist(), to_file=geocode)
+
+        return joined_series
+
