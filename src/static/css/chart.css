@@ -1,0 +1,40 @@
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #D4D8DA;
+  stroke-width: 2px;
+  shape-rendering: crispEdges;
+}
+.line {
+  fill: none;
+  stroke: red;
+  stroke-width: 2px;
+}
+
+.line2 {
+  fill: none;
+  stroke: #D4D8DA;
+  stroke-width: 2px;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.focus circle {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1px;
+}
+  
+.hover-line {
+  stroke: #6F257F;
+  stroke-width: 2px;
+  stroke-dasharray: 3,3;
+}
+
+.hiddenLine {
+  fill: white;
+  stroke-width: 100px;
+}
