@@ -19,6 +19,14 @@ def show_profit_curve():
     return render_template('profit_curve.html')
 
 
+@app.route('/get_data')
+def get_data():
+    """
+    Get data from a database at period intervals.
+    """
+    pass
+
+
 """
 Todo flow:
 I can't back calculate the confusion matrix values from the ROC
