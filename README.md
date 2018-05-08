@@ -1,4 +1,4 @@
-# Predicting Machinery Failure using Hourly Equipment Operating Logs
+# Predicting Transformer Maintenance in the Atlanta Metropolitan Area
 
 ## Business Understanding
   Many businesses are forced to extend equipment life due to costs or extraneous situations that demand continued use.
