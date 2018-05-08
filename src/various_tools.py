@@ -45,8 +45,7 @@ def plot_roc(model, X_test, y_test, ax=None):
 
 def cross_val_metrics(model, X_test, y_test, metrics):
     """
-    Print precision, recall, f1, support, and auc of a given
-    model.
+    Return metrics of the given model in a dictionary.
     """
     metrics_dict = {}
     for metric in metrics:
@@ -56,6 +55,9 @@ def cross_val_metrics(model, X_test, y_test, metrics):
 
 
 def make_metric_df(models: list, X_train: np.ndarray, y_train: np.ndarray, metrics: list) -> 'DataFrame':
+    """
+    Return a dataframe with the indices as the metrics and the columns as the models.
+    """
     dataframe_dict = {}
     for model in models:
         score = cross_val_metrics(model, X_train, y_train, metrics)
