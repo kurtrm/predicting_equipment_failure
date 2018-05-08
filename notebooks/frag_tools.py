@@ -2,13 +2,15 @@
 Various functions and classes made while developing
 pipelines and/or cleaning data.
 """
+import json
 from typing import List, Text
+import yaml
 
+import googlemaps
+import pandas as pd
 
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.preprocessing import StandardScaler, LabelBinarizer
-
-import pandas as pd
 
 
 class EquipmentScaler(BaseEstimator, TransformerMixin):
@@ -169,3 +171,51 @@ class DropColumns(BaseEstimator, TransformerMixin):
         """
         X_copy = X.copy()
         return X_copy.drop(self.column_names, axis=1)
+
+
+class RealLatLong(BaseEstimator, TransformerMixin):
+    """
+    Transformer to turn all of the current lat/longs
+    to their actual lat/longs.
+    """
+    def fit(self, X: pd.core.frame.DataFrame) -> 'RealLatLong':
+        """
+        Made available for fit_transform.
+        """
+        return self
+
+    def transform(self, X: pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
+        """
+        Extract json from file and replace the
+        latitude and longitude columns in the dataframe.
+        """
+        X_copy = X.copy()
+        path = '/mnt/c/Users/kurtrm/' \
+               'projects/predicting_equipment_failure/' \
+               'src/static/data/geocoded_address.json'
+        with open(path, 'r') as f:
+            geocoded = json.load(f)
+        lat_longs = pd.DataFrame([location[0]['geometry']['location']
+                                 for location in geocoded])
+        X_copy[['Latitude', 'Longitude']] = lat_longs
+
+        return X_copy
+
+
+def geocode_data(addresses: List, to_file: bool=False) -> List:
+    """
+    Take a list of addresses and convert them to
+    lat/longs via the googlemaps geocoding API.
+    """
+    with open('/home/kurtrm/.secrets/geocoding.yaml', 'r') as f:
+        key = yaml.load(f)
+    gmaps = googlemaps.Client(key=key['API_KEY'])
+    geocoded = [gmaps.geocode(address) for address in addresses]
+    if to_file:
+        path = '/mnt/c/Users/kurtrm/' \
+               'projects/predicting_equipment_failure/' \
+               'src/static/data/geocoded_address.json'
+        with open(path, 'w') as f:
+            json.dump(geocoded, f)
+
+    return geocode_data
