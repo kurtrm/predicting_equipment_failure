@@ -192,14 +192,29 @@ class AddressLatLong(BaseEstimator, TransformerMixin):
         latitude and longitude columns in the dataframe.
         """
         X_copy = X.copy()
-        path = '/mnt/c/Users/kurtrm/' \
-               'projects/predicting_equipment_failure/' \
-               'src/static/data/geocoded_address.json'
-        with open(path, 'r') as f:
-            geocoded = json.load(f)
+        path_all = '/mnt/c/Users/kurtrm/' \
+                   'projects/predicting_equipment_failure/' \
+                   'src/static/data/geocoded_address.json'
+        path_corrected = '/mnt/c/Users/kurtrm/' \
+                         'projects/predicting_equipment_failure/' \
+                         'src/static/data/corrected_addresses.json'
+        with open(path_all, 'r') as f:
+            geocoded_all = json.load(f)
+        with open(path_corrected, 'r') as f:
+            geocoded_corrected = json.load(f)
         lat_longs = pd.DataFrame([location[0]['geometry']['location']
-                                 for location in geocoded])
+                                 for location in geocoded_all])
         X_copy[['Latitude', 'Longitude']] = lat_longs
+        # Below, these addresses are hard coded corrections to lat_longs
+        # Indices of bad addresses
+        bad_addresses = [12, 15, 47, 107, 218, 227, 254, 381, 383, 386, 396,
+                         423, 518, 521, 562, 570, 592, 656, 700, 727, 805, 969,
+                         1038, 1092, 1121, 1207, 1251, 1273, 1360, 1384, 1387,
+                         1403, 1424, 1462, 1464, 1671]
+        corrected = [location['geometry']['location']
+                     for location in geocoded_corrected]
+        for bad_address, correction in zip(bad_addresses, corrected):
+            X_copy.at[bad_address, ['Latitude', 'Longitude']] = correction['lat'], correction['lng']
 
         return X_copy
 
