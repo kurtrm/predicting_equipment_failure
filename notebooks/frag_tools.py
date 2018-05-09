@@ -3,7 +3,7 @@ Various functions and classes made while developing
 pipelines and/or cleaning data.
 """
 import json
-from typing import List, Text
+from typing import List, Text, Callable
 import yaml
 
 import googlemaps
@@ -276,3 +276,75 @@ class Binarize(BaseEstimator, TransformerMixin):
                                           'MultipleConnects',
                                           'Storm']].applymap(lambda x: 1 if 'Y' in x else 0)
         return X_copy
+
+
+class CurrentMakeDummies(BaseEstimator, TransformerMixin):
+    """
+    For categorical features, make dummies and
+    concatentate them with the original dataframe.
+    """
+    def __init__(self, attr_names: List) -> None:
+
+        """
+        Takes a list of attr_names and col_names.
+        The order of the column names should correspond
+        to the expected ordering of the dummie columns.
+        Assumes the user has done preliminary data exploration.
+        """
+        self.attr_names = attr_names
+
+    def fit(self, X: pd.core.frame.DataFrame) -> 'CurrentMakeDummies':
+        """
+        Made available for fit_transform.
+        """
+        return self
+
+    def transform(self, X: pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
+        """
+        Transform the selected columns into separate binary columns,
+        drop the originals, and concatenate them to the original dataframe.
+        """
+        X_copy = X.copy()
+        dummies = pd.get_dummies(X_copy, columns=self.attr_names)
+
+        return dummies
+
+
+class ChangeTypes(BaseEstimator, TransformerMixin):
+    """
+    Change the types of columns
+    """
+    def __init__(self, attr_names: List, funcs: List[Callable]) -> None:
+        """
+        Accepts a list of the column names to change.
+        The types must be in the same order as the column names.
+        """
+        self.attr_names = attr_names
+        self.funcs = funcs
+
+    def fit(self, X: pd.core.frame.DataFrame) -> 'ChangeTypes':
+        """
+        Made available for fit_transform.
+        """
+        return self
+
+    def transform(self, X: pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
+        """
+        Transform the the dataframe columns into self.types.
+        """
+        X_copy = X.copy()
+        for column, func in zip(self.attr_names, self.funcs):
+            X_copy[column] = X_copy[column].apply(func)
+
+        return X_copy
+
+
+def custom_zip_cleaning(zipcode):
+    """
+    Takes a zipcode from the transformer dataset
+    and makes it an intent:
+    """
+    try:
+        return int(zipcode[:5])
+    except ValueError:
+        return 30189
