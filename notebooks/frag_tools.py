@@ -6,11 +6,13 @@ import json
 from typing import List, Text, Callable
 import yaml
 
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.preprocessing import StandardScaler, LabelBinarizer
+
 import googlemaps
 import pandas as pd
 
-from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.preprocessing import StandardScaler, LabelBinarizer
+# ================== Transformer ==========================
 
 
 class EquipmentScaler(BaseEstimator, TransformerMixin):
@@ -202,25 +204,6 @@ class AddressLatLong(BaseEstimator, TransformerMixin):
         return X_copy
 
 
-def geocode_data(addresses: List, to_file: bool=False) -> List:
-    """
-    Take a list of addresses and convert them to
-    lat/longs via the googlemaps geocoding API.
-    """
-    with open('/home/kurtrm/.secrets/geocoding.yaml', 'r') as f:
-        key = yaml.load(f)
-    gmaps = googlemaps.Client(key=key['API_KEY'])
-    geocoded = [gmaps.geocode(address) for address in addresses]
-    if to_file:
-        path = '/mnt/c/Users/kurtrm/' \
-               'projects/predicting_equipment_failure/' \
-               'src/static/data/geocoded_address.json'
-        with open(path, 'w') as f:
-            json.dump(geocoded, f)
-
-    return geocode_data
-
-
 class CleanAddresses(BaseEstimator, TransformerMixin):
     """
     Take the addresses from the raw dataframe and combine them.
@@ -338,8 +321,29 @@ class ChangeTypes(BaseEstimator, TransformerMixin):
 
         return X_copy
 
+# ================ Functions =======================
 
-def custom_zip_cleaning(zipcode):
+
+def geocode_data(addresses: List, to_file: bool=False) -> List:
+    """
+    Take a list of addresses and convert them to
+    lat/longs via the googlemaps geocoding API.
+    """
+    with open('/home/kurtrm/.secrets/geocoding.yaml', 'r') as f:
+        key = yaml.load(f)
+    gmaps = googlemaps.Client(key=key['API_KEY'])
+    geocoded = [gmaps.geocode(address) for address in addresses]
+    if to_file:
+        path = '/mnt/c/Users/kurtrm/' \
+               'projects/predicting_equipment_failure/' \
+               'src/static/data/geocoded_address.json'
+        with open(path, 'w') as f:
+            json.dump(geocoded, f)
+
+    return geocode_data
+
+
+def custom_zip_cleaning(zipcode: int) -> int:
     """
     Takes a zipcode from the transformer dataset
     and makes it an intent:
