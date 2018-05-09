@@ -107,7 +107,7 @@ class NameChanger(BaseEstimator, TransformerMixin):
         return X_copy
 
 
-class MakeDummies(BaseEstimator, TransformerMixin):
+class BackupMakeDummies(BaseEstimator, TransformerMixin):
     """
     For categorical features, make dummies and
     concatentate them with the original dataframe.
@@ -159,7 +159,7 @@ class DropColumns(BaseEstimator, TransformerMixin):
         """
         self.column_names = column_names
 
-    def fit(self, X: pd.core.frame.DataFrame) -> 'MakeDummies':
+    def fit(self, X: pd.core.frame.DataFrame) -> 'DropColumns':
         """
         Made available for fit_transform.
         """
@@ -173,12 +173,12 @@ class DropColumns(BaseEstimator, TransformerMixin):
         return X_copy.drop(self.column_names, axis=1)
 
 
-class RealLatLong(BaseEstimator, TransformerMixin):
+class AddressLatLong(BaseEstimator, TransformerMixin):
     """
     Transformer to turn all of the current lat/longs
     to their actual lat/longs.
     """
-    def fit(self, X: pd.core.frame.DataFrame) -> 'RealLatLong':
+    def fit(self, X: pd.core.frame.DataFrame) -> 'AddressLatLong':
         """
         Made available for fit_transform.
         """
@@ -247,3 +247,32 @@ class CleanAddresses(BaseEstimator, TransformerMixin):
 
         return joined_series
 
+
+class Binarize(BaseEstimator, TransformerMixin):
+    """
+    Binarize columns.
+    """
+    def __init__(self, attr_names: List) -> None:
+        """
+        Initialize with the names of the attributes to
+        apply the transformation.
+        """
+        self.attr_names = attr_names
+
+    def fit(self, X: pd.core.frame.DataFrame) -> 'Binarize':
+        """
+        Made available for fit_transform.
+        """
+        return self
+
+    def transform(self, X: pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
+        """
+        Binarize the attr_names columns to 0 and 1.
+        """
+        X_copy = X.copy()
+        X_copy[self.attr_names] = X_copy[['VegMgmt',
+                                          'PMLate',
+                                          'WaterExposure',
+                                          'MultipleConnects',
+                                          'Storm']].applymap(lambda x: 1 if 'Y' in x else 0)
+        return X_copy
