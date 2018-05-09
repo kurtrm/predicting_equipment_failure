@@ -2,13 +2,15 @@
 Various functions and classes made while developing
 pipelines and/or cleaning data.
 """
-from typing import List, Text
+import json
+from typing import List, Text, Callable
+import yaml
 
+import googlemaps
+import pandas as pd
 
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.preprocessing import StandardScaler, LabelBinarizer
-
-import pandas as pd
 
 
 class EquipmentScaler(BaseEstimator, TransformerMixin):
@@ -105,7 +107,7 @@ class NameChanger(BaseEstimator, TransformerMixin):
         return X_copy
 
 
-class MakeDummies(BaseEstimator, TransformerMixin):
+class BackupMakeDummies(BaseEstimator, TransformerMixin):
     """
     For categorical features, make dummies and
     concatentate them with the original dataframe.
@@ -157,7 +159,7 @@ class DropColumns(BaseEstimator, TransformerMixin):
         """
         self.column_names = column_names
 
-    def fit(self, X: pd.core.frame.DataFrame) -> 'MakeDummies':
+    def fit(self, X: pd.core.frame.DataFrame) -> 'DropColumns':
         """
         Made available for fit_transform.
         """
@@ -169,3 +171,180 @@ class DropColumns(BaseEstimator, TransformerMixin):
         """
         X_copy = X.copy()
         return X_copy.drop(self.column_names, axis=1)
+
+
+class AddressLatLong(BaseEstimator, TransformerMixin):
+    """
+    Transformer to turn all of the current lat/longs
+    to their actual lat/longs.
+    """
+    def fit(self, X: pd.core.frame.DataFrame) -> 'AddressLatLong':
+        """
+        Made available for fit_transform.
+        """
+        return self
+
+    def transform(self, X: pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
+        """
+        Extract json from file and replace the
+        latitude and longitude columns in the dataframe.
+        """
+        X_copy = X.copy()
+        path = '/mnt/c/Users/kurtrm/' \
+               'projects/predicting_equipment_failure/' \
+               'src/static/data/geocoded_address.json'
+        with open(path, 'r') as f:
+            geocoded = json.load(f)
+        lat_longs = pd.DataFrame([location[0]['geometry']['location']
+                                 for location in geocoded])
+        X_copy[['Latitude', 'Longitude']] = lat_longs
+
+        return X_copy
+
+
+def geocode_data(addresses: List, to_file: bool=False) -> List:
+    """
+    Take a list of addresses and convert them to
+    lat/longs via the googlemaps geocoding API.
+    """
+    with open('/home/kurtrm/.secrets/geocoding.yaml', 'r') as f:
+        key = yaml.load(f)
+    gmaps = googlemaps.Client(key=key['API_KEY'])
+    geocoded = [gmaps.geocode(address) for address in addresses]
+    if to_file:
+        path = '/mnt/c/Users/kurtrm/' \
+               'projects/predicting_equipment_failure/' \
+               'src/static/data/geocoded_address.json'
+        with open(path, 'w') as f:
+            json.dump(geocoded, f)
+
+    return geocode_data
+
+
+class CleanAddresses(BaseEstimator, TransformerMixin):
+    """
+    Take the addresses from the raw dataframe and combine them.
+    """
+    def fit(self, X: pd.core.frame.DataFrame) -> 'CleanAddresses':
+        """
+        Made available for fit_transform.
+        """
+        return self
+
+    def transform(self, X: pd.core.frame.DataFrame, geocode: bool=False) -> pd.core.frame.DataFrame:
+        """
+        Combine the address columns.
+        """
+        X_copy = X.copy()
+        location_info = X_copy[['AssetLocation',
+                                'AssetCity',
+                                'AssetState',
+                                'AssetZip']]
+        joined_series = location_info.apply(lambda x: ", ".join(x.tolist()),
+                                            axis=1)
+        if geocode:
+            geocode_data(joined_series.tolist(), to_file=geocode)
+
+        return joined_series
+
+
+class Binarize(BaseEstimator, TransformerMixin):
+    """
+    Binarize columns.
+    """
+    def __init__(self, attr_names: List) -> None:
+        """
+        Initialize with the names of the attributes to
+        apply the transformation.
+        """
+        self.attr_names = attr_names
+
+    def fit(self, X: pd.core.frame.DataFrame) -> 'Binarize':
+        """
+        Made available for fit_transform.
+        """
+        return self
+
+    def transform(self, X: pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
+        """
+        Binarize the attr_names columns to 0 and 1.
+        """
+        X_copy = X.copy()
+        X_copy[self.attr_names] = X_copy[['VegMgmt',
+                                          'PMLate',
+                                          'WaterExposure',
+                                          'MultipleConnects',
+                                          'Storm']].applymap(lambda x: 1 if 'Y' in x else 0)
+        return X_copy
+
+
+class CurrentMakeDummies(BaseEstimator, TransformerMixin):
+    """
+    For categorical features, make dummies and
+    concatentate them with the original dataframe.
+    """
+    def __init__(self, attr_names: List) -> None:
+
+        """
+        Takes a list of attr_names and col_names.
+        The order of the column names should correspond
+        to the expected ordering of the dummie columns.
+        Assumes the user has done preliminary data exploration.
+        """
+        self.attr_names = attr_names
+
+    def fit(self, X: pd.core.frame.DataFrame) -> 'CurrentMakeDummies':
+        """
+        Made available for fit_transform.
+        """
+        return self
+
+    def transform(self, X: pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
+        """
+        Transform the selected columns into separate binary columns,
+        drop the originals, and concatenate them to the original dataframe.
+        """
+        X_copy = X.copy()
+        dummies = pd.get_dummies(X_copy, columns=self.attr_names)
+
+        return dummies
+
+
+class ChangeTypes(BaseEstimator, TransformerMixin):
+    """
+    Change the types of columns
+    """
+    def __init__(self, attr_names: List, funcs: List[Callable]) -> None:
+        """
+        Accepts a list of the column names to change.
+        The types must be in the same order as the column names.
+        """
+        self.attr_names = attr_names
+        self.funcs = funcs
+
+    def fit(self, X: pd.core.frame.DataFrame) -> 'ChangeTypes':
+        """
+        Made available for fit_transform.
+        """
+        return self
+
+    def transform(self, X: pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
+        """
+        Transform the the dataframe columns into self.types.
+        """
+        X_copy = X.copy()
+        for column, func in zip(self.attr_names, self.funcs):
+            X_copy[column] = X_copy[column].apply(func)
+
+        return X_copy
+
+
+def custom_zip_cleaning(zipcode):
+    """
+    Takes a zipcode from the transformer dataset
+    and makes it an intent:
+    """
+    try:
+        return int(zipcode[:5])
+    except ValueError:
+        return 30189
