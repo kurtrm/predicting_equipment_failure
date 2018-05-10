@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import cross_val_score
+from sklearn.metrics import precision_recall_curve, average_precision_score
+from sklearn.model_selection import GridSearchCV
 
 
 def roc(model, X_test, y_test):
@@ -19,7 +21,6 @@ def roc(model, X_test, y_test):
     fprs = np.empty(len(y_test))
     tprs = np.empty(len(y_test))
     for i, prob in enumerate(np.linspace(0, 1, len(sorted_probs))):
-        # import pdb; pdb.set_trace()
         partition = y_test[probs > prob]
         true_positives = len(partition[partition == 1])
         false_positives = len(partition[partition == 0])
@@ -64,3 +65,37 @@ def make_metric_df(models: list, X_train: np.ndarray, y_train: np.ndarray, metri
         score = cross_val_metrics(model, X_train, y_train, metrics)
         dataframe_dict[model.__class__.__name__] = score
     return pd.DataFrame(dataframe_dict)
+
+
+def plot_precision_recall(models: list, X_test: np.ndarray, y_test: np.ndarray, ax=None) -> None:
+    """
+    Plot precision recall curve.
+    """
+    if ax is None:
+        fig, ax = plt.subplots()
+    for model in models:
+        probs = model.predict_proba(X_test)[:, 1]
+        precision, recall, threshold = precision_recall_curve(y_test, probs)
+        avg_prec = average_precision_score(y_test, probs)
+        ax.plot(recall, precision, label=f'{model.__class__.__name__}: {avg_prec:.3f}')
+    ax.set_ylabel('Precision')
+    ax.set_xlabel('Recall')
+    ax.set_title('Precision Recall Curve')
+    ax.legend()
+
+
+def grid_search_models(models: list, param_dicts: list, X: np.ndarray, y: np.ndarray) -> list:
+    """
+    Return a list of grid search objects.
+    models should contain a list of model class references.
+    models and param_dicts will be zipped, so ensure they
+    are ordered with each other.
+    """
+    grid_searched_models = []
+    for model, params in zip(models, param_dicts):
+        search = GridSearchCV(model(),
+                              params, cv=10, verbose=True)
+        search.fit(X, y)
+        grid_searched_models.append(search)
+
+    return grid_searched_models
