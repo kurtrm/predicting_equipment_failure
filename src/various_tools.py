@@ -19,7 +19,6 @@ def roc(model, X_test, y_test):
     fprs = np.empty(len(y_test))
     tprs = np.empty(len(y_test))
     for i, prob in enumerate(np.linspace(0, 1, len(sorted_probs))):
-        # import pdb; pdb.set_trace()
         partition = y_test[probs > prob]
         true_positives = len(partition[partition == 1])
         false_positives = len(partition[partition == 0])
@@ -62,5 +61,16 @@ def make_metric_df(models: list, X_train: np.ndarray, y_train: np.ndarray, metri
     dataframe_dict = {}
     for model in models:
         score = cross_val_metrics(model, X_train, y_train, metrics)
+        dataframe_dict[model.__class__.__name__] = score
+    return pd.DataFrame(dataframe_dict)
+
+
+def make_trained_metric_df(models: list, X_test: np.ndarray, y_test: np.ndarray, metrics: list) -> 'DataFrame':
+    """
+    Return a dataframe with the indices as the metrics and the columns as the models.
+    """
+    dataframe_dict = {}
+    for model in models:
+        score = cross_val_metrics(model, X_test, y_test, metrics)
         dataframe_dict[model.__class__.__name__] = score
     return pd.DataFrame(dataframe_dict)
