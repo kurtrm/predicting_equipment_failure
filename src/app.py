@@ -27,6 +27,14 @@ def get_data():
     pass
 
 
+@app.route('/map')
+def show_map():
+    """
+    Get data from a database at period intervals.
+    """
+    return render_template('map.html')
+
+
 """
 Todo flow:
 I can't back calculate the confusion matrix values from the ROC
