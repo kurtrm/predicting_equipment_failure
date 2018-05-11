@@ -35,6 +35,7 @@ def show_map():
     """
     with open('/home/kurtrm/.secrets/map.yaml', 'r') as f:
         key = yaml.load(f)
+
     return render_template('map.html', API_KEY=key['API_KEY'])
 
 

@@ -9,6 +9,7 @@
        * element that contains the map. */
       #map {
         height: 50%;
+        width: 50%;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -26,6 +27,11 @@
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 33.746511, lng: -84.388339}, 
           zoom: 8
+        });
+        var marker = new google.maps.Marker({
+        position: {lat: 33.746511, lng: -84.388339},
+        map: map,
+        title: 'Hello World!'
         });
       }
     </script>
