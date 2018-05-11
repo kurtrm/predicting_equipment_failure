@@ -4,6 +4,10 @@
     <title>Simple Map</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -28,10 +32,14 @@
           center: {lat: 33.746511, lng: -84.388339}, 
           zoom: 8
         });
-        var marker = new google.maps.Marker({
-        position: {lat: 33.746511, lng: -84.388339},
-        map: map,
-        title: 'Hello World!'
+        $.getJSON("../static/data/lat_long.json", function(d){
+        for (var i = 0; i < d.length; i++){
+            var marker = new google.maps.Marker({
+            position: {lat: d[i]["Latitude"], lng: d[i]["Longitude"]},
+            map: map,
+            title: 'Hello World!'
+            }); 
+        }
         });
       }
     </script>
