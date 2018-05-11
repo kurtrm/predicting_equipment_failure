@@ -7,10 +7,10 @@ import yaml
 from flask import (Flask,
                    render_template)
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 
-@app.route('/')
+@application.route('/')
 def show_chart():
     """
     This route renders the chart template.
@@ -18,7 +18,7 @@ def show_chart():
     return render_template('chart.html')
 
 
-@app.route('/profit_curve')
+@application.route('/profit_curve')
 def show_profit_curve():
     """
     This route renders the profit curve template.
@@ -26,7 +26,7 @@ def show_profit_curve():
     return render_template('profit_curve.html')
 
 
-@app.route('/get_data')
+@application.route('/get_data')
 def get_data():
     """
     Get data from a database at period intervals.
@@ -34,7 +34,7 @@ def get_data():
     pass
 
 
-@app.route('/map')
+@application.route('/map')
 def show_map():
     """
     Get data from a database at period intervals.
@@ -45,7 +45,7 @@ def show_map():
     except FileNotFoundError:
         key = os.environ['API_KEY']
 
-    return render_template('map.html', API_KEY=key['API_KEY'])
+    return render_template('map.html', API_KEY=key)
 
 
 """
@@ -76,4 +76,4 @@ with the numbers, similar to the procedure in #4.
 """
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    application.run(host='0.0.0.0', port=8000, debug=True)
