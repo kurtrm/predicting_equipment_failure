@@ -1,6 +1,8 @@
 """
 Basic flask app to display D3 chart.
 """
+import os
+
 import yaml
 from flask import (Flask,
                    render_template)
@@ -37,8 +39,11 @@ def show_map():
     """
     Get data from a database at period intervals.
     """
-    with open('/home/kurtrm/.secrets/map.yaml', 'r') as f:
-        key = yaml.load(f)
+    try:
+        with open('/home/kurtrm/.secrets/map.yaml', 'r') as f:
+            key = yaml.load(f)
+    except FileNotFoundError:
+        key = os.environ['API_KEY']
 
     return render_template('map.html', API_KEY=key['API_KEY'])
 
