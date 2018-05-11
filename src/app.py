@@ -10,13 +10,17 @@ app = Flask(__name__)
 
 @app.route('/')
 def show_chart():
-
+    """
+    This route renders the chart template.
+    """
     return render_template('chart.html')
 
 
 @app.route('/profit_curve')
 def show_profit_curve():
-
+    """
+    This route renders the profit curve template.
+    """
     return render_template('profit_curve.html')
 
 
