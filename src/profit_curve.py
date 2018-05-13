@@ -34,3 +34,22 @@ Actual ->          [Failure | Nominal]
 #  Assume 1 hour equates to $100 revenue
 #  Repair costs $100 upfront
 #  Failure costs $1000
+import numpy as np
+import pandas as pd
+
+
+def threshold_prediction(model, X, threshold=0.5):
+    """
+    Return predictions based on threshold.
+    This code comes from class notes with modifications.
+    """
+    return np.where(model.predict_proba(X)[:, 1] > threshold,
+                    model.classes_[1],
+                    model.classes_[0])
+
+
+def confusion_matrix(model, X_test, y_test, threshold=0.5):
+    cf = pd.crosstab(y_test, threshold_prediction(model, X_test, threshold))
+    cf.index.name = 'actual'
+    cf.columns.name = 'predicted'
+    return cf.values
