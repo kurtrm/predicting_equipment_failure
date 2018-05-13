@@ -1,9 +1,12 @@
 "use strict";
 
-var svg = d3.select("svg"),
+var svg = d3.select("svg")
+              .attr("preserveAspectRatio", "xMidYMid meet")
+              .attr("viewBox", "0 0 400 300"),
     margin = {top: 20, right: 20, bottom: 30, left: 20},
     width = +svg.attr("width") - 400 - margin.left - margin.right,
     height = +svg.attr("height") - margin.top - margin.bottom;
+
 
 var x = d3.scaleLinear()
     .range([0, width]);
@@ -15,8 +18,8 @@ var line1 = d3.line()
     .x(d => x(d.threshold))
     .y(d => y(d.loss));
 
-var g = svg.append("g")
-    .attr("transform", "translate(" + (margin.left + 50) + "," + margin.top + ")");
+var g = svg.append("g");
+    // .attr("transform", "translate(" + (margin.left + 50) + "," + margin.top + ")");
 
 d3.json("static/data/thresh_losses.json", function(thisData) {
 
