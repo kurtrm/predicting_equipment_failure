@@ -48,6 +48,13 @@ def show_map():
     return render_template('map.html', API_KEY=key)
 
 
+@application.route('/index')
+def show_index():
+    """
+    Test for bootstrap template.
+    """
+    return render_template('index.html')
+
 """
 Todo flow:
 I can't back calculate the confusion matrix values from the ROC
