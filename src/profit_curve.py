@@ -53,3 +53,13 @@ def confusion_matrix(model, X_test, y_test, threshold=0.5):
     cf.index.name = 'actual'
     cf.columns.name = 'predicted'
     return cf.values
+
+
+def sum_payout(cost_matrix, confusion_matrix):
+    """
+    Calculate the profit from cost and confusion matrices.
+    """
+    return (confusion_matrix * cost_matrix).sum()
+
+
+def generate_profit_curve(profit, loss)
