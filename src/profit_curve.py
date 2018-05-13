@@ -55,6 +55,15 @@ def confusion_matrix(model, X_test, y_test, threshold=0.5):
     return cf.values
 
 
+def generate_cost_matrix(revenue, maintenance, repair):
+    """
+    Calculate the cost_matrix based on how much a transformer
+    generates revenue, costs to maintain, and costs to repair.
+    """
+    return np.array([[maintenance, repair],
+                     [maintenance, revenue]])
+
+
 def sum_payout(cost_matrix, confusion_matrix):
     """
     Calculate the profit from cost and confusion matrices.
@@ -62,4 +71,16 @@ def sum_payout(cost_matrix, confusion_matrix):
     return (confusion_matrix * cost_matrix).sum()
 
 
-def generate_profit_curve(profit, loss)
+def generate_profit_curve(cost_matrix,
+                          model,
+                          X_test, y_test, n_thresholds=100):
+    """
+    Generate the profit curve with a given cost matrix.
+    """
+    thresholds = np.linspace(0, 1, n_thresholds)
+    totals = []
+    for threshold in thresholds:
+        iter_conf_matrix = confusion_matrix(model, X_test, y_test, threshold)
+        totals.append(sum_payout(cost_matrix, iter_conf_matrix))
+
+    return thresholds, np.array(totals)
