@@ -5,6 +5,8 @@ the actual profit curve.
 
 # X-axis: thresholds (0-1.0)
 # y-axis: profits (large integers)
+import numpy as np
+import pandas as pd
 """
 Using the trained model, the test data, and a given threshold
 calculate the confusion matrix
@@ -34,8 +36,6 @@ Actual ->          [Failure | Nominal]
 #  Assume 1 hour equates to $100 revenue
 #  Repair costs $100 upfront
 #  Failure costs $1000
-import numpy as np
-import pandas as pd
 
 
 def threshold_prediction(model, X, threshold=0.5):
@@ -83,4 +83,4 @@ def generate_profit_curve(cost_matrix,
         iter_conf_matrix = confusion_matrix(model, X_test, y_test, threshold)
         totals.append(sum_payout(cost_matrix, iter_conf_matrix))
 
-    return thresholds, np.array(totals)
+    return thresholds.tolist(), totals
