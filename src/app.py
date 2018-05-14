@@ -32,17 +32,18 @@ def show_profit_curve():
     return render_template('profit_curve.html')
 
 
-@application.route('/profit_curve', methods=['POST'])
+@application.route('/generate', methods=['POST'])
 def make_profit_curve():
     """
     Route that generates new profit curve data from
     user inputs on revenue, maintenance, and repair costs.
     """
+    # import pdb; pdb.set_trace()
     data = request.json
-    revenue, maintenance, repair = data['user_input']
+    revenue, maintenance, repair = [float(x) for x in data['user_input']]
     test_set = pd.read_csv('static/data/test_set.csv',
                            sep=';',
-                           headers=None).values
+                           header=None).values
     model = joblib.load('static/models/final_grad_boost.pkl')
     X_test, y_test = test_set[:, :-1], test_set[:, -1]
     cost_matrix = profit_curve.generate_cost_matrix(revenue, maintenance, repair)
@@ -50,7 +51,7 @@ def make_profit_curve():
                                                             model,
                                                             X_test,
                                                             y_test)
-    return jsonify([{'thresholds': threshold, 'loss': total}
+    return jsonify([{'threshold': threshold, 'loss': total}
                     for threshold, total in zip(thresholds, totals)])
 
 
