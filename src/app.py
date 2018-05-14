@@ -5,6 +5,7 @@ import os
 
 import yaml
 import pandas as pd
+import numpy as np
 from sklearn.externals import joblib
 from flask import (Flask,
                    render_template,
@@ -29,6 +30,31 @@ def new_transformer():
     """
     """
     return render_template('new_transformer.html')
+
+
+@application.route('/transformer_prediction', methods=['POST'])
+def transformer_prediction():
+    """
+    """
+    data = request.json
+    binary = ['VegMgmt', 'PMLate', 'WaterExposure', 'MultipleConnects', 'Storm']
+    categorical = ['Manufacturer_GE', 'Manufacturer_Other',
+                   'Manufacturer_Schneider Electric', 'Manufacturer_Siemens',
+                   'Repairs_Original', 'Repairs_Rebuild+1', 'Repairs_Rebuild+2',
+                   'Repairs_Rebuild+3', 'AssetType_1-Phase Pole Transformer',
+                   'AssetType_3-Phase Transformer', 'AssetType_DF-series Transformer',
+                   'AssetType_Padmount Transformer', 'AssetType_Voltage Transformer']
+    listy = []
+    for header in binary:
+        listy.append(data[header] == "1")
+    listy.append(int(data['Age']))
+    for category in categorical:
+        if category in data:
+            listy.append(True)
+        else:
+            listy.append(False)
+    import pdb; pdb.set_trace()
+    return np.array(listy)
 
 
 @application.route('/profit_curve')
