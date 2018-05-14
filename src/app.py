@@ -24,6 +24,13 @@ def show_chart():
     return render_template('chart.html')
 
 
+@application.route('/new_transformer')
+def new_transformer():
+    """
+    """
+    return render_template('new_transformer.html')
+
+
 @application.route('/profit_curve')
 def show_profit_curve():
     """
@@ -38,7 +45,6 @@ def make_profit_curve():
     Route that generates new profit curve data from
     user inputs on revenue, maintenance, and repair costs.
     """
-    # import pdb; pdb.set_trace()
     data = request.json
     revenue, maintenance, repair = [float(x) for x in data['user_input']]
     test_set = pd.read_csv('static/data/test_set.csv',
