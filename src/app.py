@@ -53,8 +53,10 @@ def transformer_prediction():
             listy.append(True)
         else:
             listy.append(False)
-    import pdb; pdb.set_trace()
-    return np.array(listy)
+    model = joblib.load('static/models/final_grad_boost.pkl')
+    threshold = .5  # Get threshold
+    probs = model.predict_proba(np.array(listy).reshape(1, -1))[:, 1]
+    return jsonify({'threshold': f'{threshold * 100}', 'probability': f'{probs[0] * 100:.2f}'})
 
 
 @application.route('/profit_curve')
