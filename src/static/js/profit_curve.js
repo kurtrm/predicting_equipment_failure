@@ -1,8 +1,8 @@
 "use strict";
 
-var svg = d3.select("svg")
-              .attr("preserveAspectRatio", "xMidYMid meet")
-              .attr("viewBox", "0 0 400 300"),
+var svg = d3.select("svg"),
+              // .attr("preserveAspectRatio", "xMidYMid meet")
+              // .attr("viewBox", "0 0 400 300"),
     margin = {top: 20, right: 20, bottom: 30, left: 20},
     width = +svg.attr("width") - 400 - margin.left - margin.right,
     height = +svg.attr("height") - margin.top - margin.bottom;
