@@ -5,184 +5,186 @@
  <link href="{{url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
 </head>
 <body>
-<form class="needs-validation" novalidate>
-  <div class="form-row">
-    <div class="col-md-4 mb-3">
-        <p>Vegetation Management Plan?</p>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-          <label class="form-check-label" for="exampleRadios1">
-            Yes
-          </label>
+<div class="container">
+    <form class="needs-validation" novalidate>
+      <div class="form-group">
+        <div class="col-md-6 mb-3">
+            <h6>Vegetation Management Plan?</h6>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="VegMgmt" id="VegMgmtYes" value="Yes" checked>
+              <label class="form-check-label" for="VegMgmtYes">
+                Yes
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="VegMgmt" id="VegMgmtNo" value="No">
+              <label class="form-check-label" for="VegMgmtNo">
+                No
+              </label>
+            </div>
+          </div>
+        <div class="col-md-6 mb-3">
+           <h6>Has preventive maintenance ever been scheduled late on this transformer?</h6>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="PMLate" id="PMLateYes" value="Yes" checked>
+             <label class="form-check-label" for="PMLateYes">
+               Yes
+             </label>
+           </div>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="PMLate" id="PMLateNo" value="No">
+             <label class="form-check-label" for="PMLateNo">
+               No
+             </label>
+           </div>
         </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-          <label class="form-check-label" for="exampleRadios2">
-            No
-          </label>
+        <div class="col-md-6 mb-3">
+           <h6>Documented water exposure?</h6>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="WaterExposure" id="WaterExposureYes" value="Yes" checked>
+             <label class="form-check-label" for="WaterExposureYes">
+               Yes
+             </label>
+           </div>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="WaterExposure" id="WaterExposureNo" value="No">
+             <label class="form-check-label" for="WaterExposureNo">
+               No
+             </label>
+           </div>
         </div>
       </div>
-    <div class="col-md-4 mb-3">
-       <p>Has preventive maintenance ever been scheduled late on this transformer?</p>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-         <label class="form-check-label" for="exampleRadios1">
-           Yes
-         </label>
-       </div>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-         <label class="form-check-label" for="exampleRadios2">
-           No
-         </label>
-       </div>
-    </div>
-    <div class="col-md-4 mb-3">
-       <p>Documented water exposure?</p>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-         <label class="form-check-label" for="exampleRadios1">
-           Yes
-         </label>
-       </div>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-         <label class="form-check-label" for="exampleRadios2">
-           No
-         </label>
-       </div>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="col-md-6 mb-3">
-       <p>Will the transformer have more than one connection?</p>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-         <label class="form-check-label" for="exampleRadios1">
-           Yes
-         </label>
-       </div>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-         <label class="form-check-label" for="exampleRadios2">
-           No
-         </label>
-       </div>
-    </div>
-    <div class="col-md-3 mb-3">
-       <p>Will the transformer be exposed to severe weather?</p>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-         <label class="form-check-label" for="exampleRadios1">
-           Yes
-         </label>
-       </div>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-         <label class="form-check-label" for="exampleRadios2">
-           No
-         </label>
-       </div>
-    </div>
-    <div class="col-md-3 mb-3">
-      <label for="validationTooltip05">Age</label>
-      <input type="text" class="form-control" id="validationTooltip05" placeholder="Age" required>
-      <div class="invalid-tooltip">
-        Please provide a valid zip.
+      <div class="form-group">
+        <div class="col-md-6 mb-3">
+           <h6>Will the transformer have more than one connection?</h6>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="MultipleConnects" id="MultipleConnectsYes" value="Yes" checked>
+             <label class="form-check-label" for="MultipleConnectsYes">
+               Yes
+             </label>
+           </div>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="MultipleConnects" id="MultipleConnectsNo" value="No">
+             <label class="form-check-label" for="MultipleConnectsNo">
+               No
+             </label>
+           </div>
+        </div>
+        <div class="col-md-3 mb-3">
+           <h6>Will the transformer be exposed to severe weather?</h6>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="Storm" id="StormYes" value="Yes" checked>
+             <label class="form-check-label" for="StormYes">
+               Yes
+             </label>
+           </div>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="Storm" id="StormNo" value="No">
+             <label class="form-check-label" for="StormNo">
+               No
+             </label>
+           </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label for="validationTooltip05"><h6>Age</h6></label>
+          <input type="text" class="form-control" id="Age" placeholder="Enter whole number or a decimal" required>
+          <div class="invalid-tooltip">
+            Please provide a valid age.
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="col-md-6 mb-3">
-       <p>Manufacturer</p>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-         <label class="form-check-label" for="exampleRadios1">
-           General Electric (GE)
-         </label>
-       </div>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-         <label class="form-check-label" for="exampleRadios2">
-           Schneider Electric
-         </label>
-       </div>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option3">
-         <label class="form-check-label" for="exampleRadios2">
-           Siemens
-         </label>
-       </div>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option4">
-         <label class="form-check-label" for="exampleRadios2">
-           Other
-         </label>
-       </div>
-    </div>
-    <div class="col-md-6 mb-3">
-       <p>Number of rebuilds/overhauls (if applicable): </p>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-         <label class="form-check-label" for="exampleRadios1">
-           Original build
-         </label>
-       </div>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-         <label class="form-check-label" for="exampleRadios2">
-           1
-         </label>
-       </div>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option3">
-         <label class="form-check-label" for="exampleRadios2">
-           2
-         </label>
-       </div>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option4">
-         <label class="form-check-label" for="exampleRadios2">
-           3
-         </label>
-       </div>
-    </div>
-    <div class="col-md-6 mb-3">
-       <p>Transformer type: </p>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-         <label class="form-check-label" for="exampleRadios1">
-           1 Phase Pole Transformer
-         </label>
-       </div>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-         <label class="form-check-label" for="exampleRadios2">
-           3 Phase Transformer
-         </label>
-       </div>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option3">
-         <label class="form-check-label" for="exampleRadios2">
-           Padmount Transformer
-         </label>
-       </div>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option4">
-         <label class="form-check-label" for="exampleRadios2">
-           DF-series Transformer
-         </label>
-       </div>
-       <div class="form-check">
-         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option4">
-         <label class="form-check-label" for="exampleRadios2">
-           Other
-         </label>
-       </div>
-    </div>
-  </div>
-  <button class="btn btn-primary" type="submit">Submit form</button>
-</form>
+      <div class="form-group">
+        <div class="col-md-6 mb-3">
+           <h6>Manufacturer</h6>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="Manufacturer" id="Manufacturer1" value="option1" checked>
+             <label class="form-check-label" for="Manufacturer1">
+               General Electric (GE)
+             </label>
+           </div>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="Manufacturer" id="Manufacturer2" value="option2">
+             <label class="form-check-label" for="Manufacturer2">
+               Schneider Electric
+             </label>
+           </div>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="Manufacturer" id="Manufacturer3" value="option3">
+             <label class="form-check-label" for="Manufacturer3">
+               Siemens
+             </label>
+           </div>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="Manufacturer" id="Manufacturer4" value="option4">
+             <label class="form-check-label" for="Manufacturer4">
+               Other
+             </label>
+           </div>
+        </div>
+        <div class="col-md-6 mb-3">
+           <h6>Number of rebuilds/overhauls (if applicable): </h6>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="Rebuild" id="Rebuild0" value="option0" checked>
+             <label class="form-check-label" for="Rebuild0">
+               Original build
+             </label>
+           </div>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="Rebuild" id="Rebuild1" value="option1">
+             <label class="form-check-label" for="Rebuild1">
+               1
+             </label>
+           </div>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="Rebuild" id="Rebuild2" value="option2">
+             <label class="form-check-label" for="Rebuild2">
+               2
+             </label>
+           </div>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="Rebuild" id="Rebuild3" value="option3">
+             <label class="form-check-label" for="Rebuild3">
+               3
+             </label>
+           </div>
+        </div>
+        <div class="col-md-6 mb-3">
+           <h6>Transformer type: </h6>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="TransformerType" id="TransformerType1" value="option1" checked>
+             <label class="form-check-label" for="TransformerType1">
+               1 Phase Pole Transformer
+             </label>
+           </div>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="TransformerType" id="TransformerType2" value="option2">
+             <label class="form-check-label" for="TransformerType2">
+               3 Phase Transformer
+             </label>
+           </div>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="TransformerType" id="TransformerType3" value="option3">
+             <label class="form-check-label" for="TransformerType3">
+               Padmount Transformer
+             </label>
+           </div>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="TransformerType" id="TransformerType4" value="option4">
+             <label class="form-check-label" for="TransformerType4">
+               DF-series Transformer
+             </label>
+           </div>
+           <div class="form-check">
+             <input class="form-check-input" type="radio" name="TransformerType" id="TransformerType5" value="option4">
+             <label class="form-check-label" for="TransformerType5">
+               Other
+             </label>
+           </div>
+        </div>
+      </div>
+      <button class="btn btn-primary" type="submit">Submit form</button>
+    </form>
+</div>
     <script src="{{url_for('static', filename='vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <!-- Core plugin JavaScript-->
