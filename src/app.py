@@ -38,20 +38,20 @@ def make_profit_curve():
     Route that generates new profit curve data from
     user inputs on revenue, maintenance, and repair costs.
     """
+    data = request.json
+    revenue, maintenance, repair = data['user_input']
     test_set = pd.read_csv('static/data/test_set.csv',
                            sep=';',
                            headers=None).values
     model = joblib.load('static/models/final_grad_boost.pkl')
     X_test, y_test = test_set[:, :-1], test_set[:, -1]
-    data = request.json
-    revenue, maintenance, repair = data['user_input']
     cost_matrix = profit_curve.generate_cost_matrix(revenue, maintenance, repair)
     thresholds, totals = profit_curve.generate_profit_curve(cost_matrix,
                                                             model,
                                                             X_test,
                                                             y_test)
-    return jsonify({'thresholds': thresholds,
-                    'loss': totals})
+    return jsonify([{'thresholds': threshold, 'loss': total}
+                    for threshold, total in zip(thresholds, totals)])
 
 
 @application.route('/map')

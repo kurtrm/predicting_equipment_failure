@@ -3,10 +3,18 @@
 <head>
     <title></title>
     <script src="https://d3js.org/d3.v4.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../static/css/profit_curve.css">
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/profit_curve.css')}}">
 </head>
 <body>
     <svg width="960" height="500"></svg>
+    <input id="revenue" />
+    <input id="maintenance" />
+    <input id="repair" />
+    <button type="button" class="btn btn-success navbar-right" id="calculate">Recalculate</button>
 </body>
-<script src="../static/js/profit_curve.js"></script>
+<script src="{{url_for('static', filename='js/profit_curve.js')}}"></script>
 </html>
