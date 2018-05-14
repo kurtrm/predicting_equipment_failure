@@ -1,8 +1,8 @@
 "use strict";
 
-var svg = d3.select("svg")
-              .attr("preserveAspectRatio", "xMidYMid meet")
-              .attr("viewBox", "0 0 400 300"),
+var svg = d3.select("svg"),
+              // .attr("preserveAspectRatio", "xMidYMid meet")
+              // .attr("viewBox", "0 0 400 300"),
     margin = {top: 20, right: 20, bottom: 30, left: 20},
     width = +svg.attr("width") - 400 - margin.left - margin.right,
     height = +svg.attr("height") - margin.top - margin.bottom;
@@ -58,5 +58,29 @@ d3.json("static/data/thresh_losses.json", function(thisData) {
       .datum(thisData)
       .attr("class", "line")
       .attr("d", line1);
+
+  $("button#calculate").click(function (){
+    let metrics = get_metrics();
+    send_metrics(metrics);
+    })
   
   });
+
+let get_metrics = function() {
+  let revenue = $("input#revenue").val()
+  let maintenance = $("input#maintenance").val()
+  let repair = $("input#repair").val()
+  return {"user_input": [revenue, maintenance, repair]}
+};
+
+let send_metrics = function(metrics) {
+  $.ajax({
+    url: '/profit_curve',
+    contentType: "application/json; charset=utf-8",
+    type: 'POST',
+    data: JSON.stringify(metrics),
+    success: function (data) {
+      redraw(data); // NOT IMPLEMENTED
+    }
+  });
+};

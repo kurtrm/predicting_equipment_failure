@@ -4,8 +4,14 @@ Basic flask app to display D3 chart.
 import os
 
 import yaml
+import pandas as pd
+from sklearn.externals import joblib
 from flask import (Flask,
-                   render_template)
+                   render_template,
+                   request,
+                   jsonify)
+
+import profit_curve
 
 application = Flask(__name__)
 
@@ -26,12 +32,26 @@ def show_profit_curve():
     return render_template('profit_curve.html')
 
 
-@application.route('/get_data')
-def get_data():
+@application.route('/profit_curve', methods=['POST'])
+def make_profit_curve():
     """
-    Get data from a database at period intervals.
+    Route that generates new profit curve data from
+    user inputs on revenue, maintenance, and repair costs.
     """
-    pass
+    data = request.json
+    revenue, maintenance, repair = data['user_input']
+    test_set = pd.read_csv('static/data/test_set.csv',
+                           sep=';',
+                           headers=None).values
+    model = joblib.load('static/models/final_grad_boost.pkl')
+    X_test, y_test = test_set[:, :-1], test_set[:, -1]
+    cost_matrix = profit_curve.generate_cost_matrix(revenue, maintenance, repair)
+    thresholds, totals = profit_curve.generate_profit_curve(cost_matrix,
+                                                            model,
+                                                            X_test,
+                                                            y_test)
+    return jsonify([{'thresholds': threshold, 'loss': total}
+                    for threshold, total in zip(thresholds, totals)])
 
 
 @application.route('/map')
