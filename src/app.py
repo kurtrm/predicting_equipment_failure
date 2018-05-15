@@ -12,9 +12,11 @@ from flask import (Flask,
                    request,
                    jsonify)
 
-import profit_curve
+from profit_curve import generate_cost_matrix, generate_profit_curve
 
 application = Flask(__name__)
+
+model = joblib.load('static/models/final_grad_boost.pkl')
 
 
 @application.route('/')
@@ -28,6 +30,8 @@ def show_chart():
 @application.route('/new_transformer')
 def new_transformer():
     """
+    Renders a form to receive inputs on a transformer,
+    then outputs a prediction.
     """
     return render_template('new_transformer.html')
 
@@ -35,6 +39,7 @@ def new_transformer():
 @application.route('/transformer_prediction', methods=['POST'])
 def transformer_prediction():
     """
+    Make a prediction based on inputs from a form.
     """
     data = request.json
     binary = ['VegMgmt', 'PMLate', 'WaterExposure', 'MultipleConnects', 'Storm']
@@ -53,10 +58,11 @@ def transformer_prediction():
             listy.append(True)
         else:
             listy.append(False)
-    model = joblib.load('static/models/final_grad_boost.pkl')
+    # Need to save this threshold
     threshold = .5  # Get threshold
     probs = model.predict_proba(np.array(listy).reshape(1, -1))[:, 1]
-    return jsonify({'threshold': f'{threshold * 100}', 'probability': f'{probs[0] * 100:.2f}'})
+    return jsonify({'threshold': f'{threshold * 100}',
+                    'probability': f'{probs[0] * 100:.2f}'})
 
 
 @application.route('/profit_curve')
@@ -78,13 +84,12 @@ def make_profit_curve():
     test_set = pd.read_csv('static/data/test_set.csv',
                            sep=';',
                            header=None).values
-    model = joblib.load('static/models/final_grad_boost.pkl')
     X_test, y_test = test_set[:, :-1], test_set[:, -1]
-    cost_matrix = profit_curve.generate_cost_matrix(revenue, maintenance, repair)
-    thresholds, totals = profit_curve.generate_profit_curve(cost_matrix,
-                                                            model,
-                                                            X_test,
-                                                            y_test)
+    cost_matrix = generate_cost_matrix(revenue, maintenance, repair)
+    thresholds, totals = generate_profit_curve(cost_matrix,
+                                               model,
+                                               X_test,
+                                               y_test)
     return jsonify([{'threshold': threshold, 'loss': total}
                     for threshold, total in zip(thresholds, totals)])
 
@@ -92,7 +97,7 @@ def make_profit_curve():
 @application.route('/map')
 def show_map():
     """
-    Get data from a database at period intervals.
+    Show map of all transformers.
     """
     try:
         with open('/home/kurtrm/.secrets/map.yaml', 'r') as f:
