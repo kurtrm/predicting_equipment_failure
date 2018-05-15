@@ -6,6 +6,7 @@ import os
 import yaml
 import pandas as pd
 import numpy as np
+import psycopg2 as pg2
 from sklearn.externals import joblib
 from flask import (Flask,
                    render_template,
@@ -115,6 +116,18 @@ def login():
     Render template for login page.
     """
     return render_template('login.html')
+
+
+@application.route('/database_stuff')
+def database_test():
+    """
+    try to get a response from a database.
+    """
+    conn = pg2.connect(dbname='kurtrm', user='kurtrm', host='localhost')
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM buy LIMIT 1;')
+    fetched = cur.fetchall()
+    return '<p>'
 
 
 if __name__ == '__main__':
