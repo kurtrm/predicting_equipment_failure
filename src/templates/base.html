@@ -854,14 +854,9 @@
     <script src="{{url_for('static', filename='vendor/datatables/dataTables.bootstrap4.js')}}"></script>
     <!-- Custom scripts for all pages-->
     <script src="{{url_for('static', filename='js/sb-admin.min.js')}}"></script>
-    {% block map_scripts %}
-    {% endblock %}
     <!-- Custom scripts for this page-->
-    {% block profit_scripts %}
+    {% block scripts %}
     {% endblock %}
-    {% block unit_analysis %}
-    {% endblock %}
-
   </div>
 </body>
 

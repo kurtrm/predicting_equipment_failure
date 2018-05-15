@@ -3,7 +3,7 @@
 {% block title %}Cost-Benefit Analysis{% endblock %}
 
 {% block content %}
-<svg width="960" height="500"></svg>
+<svg width="850" height="400"></svg>
 <p>Revenue: </p>
 <input id="revenue" />
 <p>Maintenance costs:</p>
@@ -14,6 +14,6 @@
 <span id="example"></span>
 {% endblock %}
 
-{% block profit_scripts %}
+{% block scripts %}
 <script src="{{url_for('static', filename='js/profit_curve.js')}}"></script>
 {% endblock %}
