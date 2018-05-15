@@ -59,8 +59,13 @@ def transformer_prediction():
             listy.append(True)
         else:
             listy.append(False)
-    # Need to save this threshold
-    threshold = .5  # Get threshold
+
+    conn = pg2.connect(dbname='kurtrm', user='kurtrm', host='localhost')
+    cur = conn.cursor()
+    cur.execute('SELECT value FROM threshold;')
+    fetched = cur.fetchall()
+    conn.close()
+    threshold = fetched[0][0]
     probs = model.predict_proba(np.array(listy).reshape(1, -1))[:, 1]
     return jsonify({'threshold': f'{threshold * 100}',
                     'probability': f'{probs[0] * 100:.2f}'})
@@ -118,27 +123,32 @@ def login():
     return render_template('login.html')
 
 
-@application.route('/database_stuff')
-def database_test():
+@application.route('/retrieve_profit_curve', methods=['GET'])
+def profit_table_retrieval():
     """
-    try to get a response from a database.
+    Retrieves data from database and returns a jsonified list of dictionaries
+    back to d3.
     """
-    conn = pg2.connect(dbname='kurtrm', user='kurtrm', host='localhost')
-    cur = conn.cursor()
-    cur.execute('SELECT * FROM buy LIMIT 1;')
-    fetched = cur.fetchall()
-    return '<p>'
-
-
-@application.route('/retrieve_data', methods=['GET'])
-def database_retrieval():
     conn = pg2.connect(dbname='kurtrm', user='kurtrm', host='localhost')
     cur = conn.cursor()
     cur.execute('SELECT * FROM profit_curve;')
     fetched = cur.fetchall()
+    conn.close()
     return jsonify([{'loss': loss, 'threshold': threshold}
                     for _, loss, threshold in fetched])
 
+
+@application.route('/retrieve_roc', methods=['GET'])
+def roc_table_retrieval():
+    """
+    """
+    conn = pg2.connect(dbname='kurtrm', user='kurtrm', host='localhost')
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM rocdata;')
+    fetched = cur.fetchall()
+    conn.close()
+    return jsonify([{'fpr': fpr, 'lin': lin, 'thresh': thresh, 'tpr': tpr}
+                    for _, fpr, lin, thresh, tpr in fetched])
 
 
 if __name__ == '__main__':

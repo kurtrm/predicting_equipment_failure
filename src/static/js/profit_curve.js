@@ -24,7 +24,7 @@ var line = d3.line()
 var g = svg.append("g")
     .attr("transform", "translate(" + (margin.left + 50) + "," + margin.top + ")");
 
-d3.json("/retrieve_data", function(thisData) {
+d3.json("/retrieve_profit_curve", function(thisData) {
   draw(thisData);
 });
 
