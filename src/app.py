@@ -130,5 +130,16 @@ def database_test():
     return '<p>'
 
 
+@application.route('/retrieve_data', methods=['GET'])
+def database_retrieval():
+    conn = pg2.connect(dbname='kurtrm', user='kurtrm', host='localhost')
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM profit_curve;')
+    fetched = cur.fetchall()
+    return jsonify([{'loss': loss, 'threshold': threshold}
+                    for _, loss, threshold in fetched])
+
+
+
 if __name__ == '__main__':
     application.run(host='0.0.0.0', port=8080, debug=True)

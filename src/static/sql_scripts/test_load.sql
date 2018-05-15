@@ -68,16 +68,26 @@
 -- COPY rocdata(fpr, lin, thresh, tpr)
 -- FROM '/mnt/c/Users/kurtrm/projects/predicting_equipment_failure/src/static/data/roc_data.csv' CSV HEADER;
 
-CREATE TABLE IF NOT EXISTS threshold
-(
-id serial NOT NULL,
-value REAL
-);
+-- CREATE TABLE IF NOT EXISTS threshold
+-- (
+-- id serial NOT NULL,
+-- value REAL
+-- );
 
-INSERT INTO threshold(value)
-VALUES
-  (.3);
+-- INSERT INTO threshold(value)
+-- VALUES
+--   (.3);
 
 -- UPDATE threshold
 -- SET value = .4
 -- WHERE id = 1;
+
+CREATE TABLE IF NOT EXISTS profit_curve
+(
+id serial NOT NULL,
+loss INTEGER,
+threshold DOUBLE PRECISION
+);
+
+COPY profit_curve(loss, threshold)
+FROM '/mnt/c/Users/kurtrm/projects/predicting_equipment_failure/src/static/data/thresh_losses.csv' CSV HEADER;

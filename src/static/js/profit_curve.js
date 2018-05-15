@@ -24,7 +24,7 @@ var line = d3.line()
 var g = svg.append("g")
     .attr("transform", "translate(" + (margin.left + 50) + "," + margin.top + ")");
 
-d3.json("static/data/thresh_losses.json", function(thisData) {
+d3.json("/retrieve_data", function(thisData) {
   draw(thisData);
 });
 
