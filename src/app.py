@@ -116,6 +116,12 @@ def index_page():
     """
     return render_template('index.html')
 
+@application.route('/login')
+def login():
+    """
+    Render template for login page.
+    """
+    return render_template('login.html')
 
 if __name__ == '__main__':
     application.run(host='0.0.0.0', port=8080, debug=True)

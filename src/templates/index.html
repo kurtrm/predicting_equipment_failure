@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
+
+{% block title %}My Dashboard{% endblock %}
+
 {% block content %}
 <div class="card mb-3">
   <div class="card-header">
     <i class="fa fa-area-chart"></i>ROC Curve with Stats</div>
   <div class="card-body">
-    <svg id="myAreaChart"></svg>
+    <svg id="myAreaChart" width="700" height="250"></svg>
   </div>
   <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
 </div>
@@ -17,8 +20,8 @@
       <div class="card-body">
         <div class="row">
           <div class="col-sm-8 my-auto">
-            <canvas id="myBarChart" width="100" height="50"></canvas>
-          </div>
+<!--             <canvas id="myBarChart" width="100" height="50"></canvas>
+ -->          </div>
           <div class="col-sm-4 text-center my-auto">
             <div class="h4 mb-0 text-primary">$34,693</div>
             <div class="small text-muted">YTD Revenue</div>
@@ -290,4 +293,8 @@
 -->          </div>
   </div>
 </div>
+{% endblock %}
+
+{% block map_scripts %}
+  <script src="{{url_for('static', filename='js/line_chart.js')}}"></script>
 {% endblock %}

@@ -19,6 +19,7 @@
   <link href="{{url_for('static', filename='css/sb-admin.css')}}" rel="stylesheet">
   <link href="{{url_for('static', filename='css/profit_curve.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/maps.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/chart.css') }}" rel="stylesheet">
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -39,7 +40,7 @@
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
           <a class="nav-link" href="{{ url_for('profit_curve') }}">
             <i class="fa fa-fw fa-area-chart"></i>
-            <span class="nav-link-text">Cost/Benefit Analysis</span>
+            <span class="nav-link-text">Cost-Benefit Analysis</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
@@ -234,8 +235,10 @@
         </li>
  -->        
         <li class="nav-item">
-          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-            <i class="fa fa-fw fa-sign-in"></i>Login</a>
+<!--           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+            <i class="fa fa-fw fa-sign-in"></i>Login</a> -->
+            <a class="nav-link" href="{{ url_for('login') }}">
+              <i class="fa fa-fw fa-sign-in"></i>Login</a>
         </li>
       </ul>
     </div>
@@ -245,9 +248,9 @@
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">Dashboard</a>
+          <a href="{{ url_for('index_page') }}">Dashboard</a>
         </li>
-        <li class="breadcrumb-item active">My Dashboard</li>
+        <li class="breadcrumb-item active">{% block title %}{% endblock %}</li>
       </ol>
       <!-- Icon Cards-->
 <!--       <div class="row">
@@ -824,7 +827,7 @@
       <i class="fa fa-angle-up"></i>
     </a>
     <!-- Logout Modal-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -840,7 +843,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- Bootstrap core JavaScript-->
     <script src="{{url_for('static', filename='vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
