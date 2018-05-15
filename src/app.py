@@ -150,6 +150,20 @@ def roc_table_retrieval():
     return jsonify([{'fpr': fpr, 'lin': lin, 'thresh': thresh, 'tpr': tpr}
                     for _, fpr, lin, thresh, tpr in fetched])
 
+@application.route('/save_profit_curve', methods=['POST'])
+def save_profit_curve():
+    """
+    """
+    data = request.json
+    # import pdb; pdb.set_trace()
+    conn = pg2.connect(dbname='kurtrm', user='kurtrm', host='localhost')
+    cur = conn.cursor()
+    update_statement = 'UPDATE threshold SET value = %s WHERE id = 1;'
+    cur.execute(update_statement, (data,))
+    conn.commit()
+    conn.close()
+    return '200 OK'
+
 
 if __name__ == '__main__':
     application.run(host='0.0.0.0', port=8080, debug=True)

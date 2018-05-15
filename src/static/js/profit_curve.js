@@ -126,6 +126,7 @@ let draw = function(data) {
 
 $(document).ready(function() {
   $("button#calculate").click(function() {
+    $(".assess-box").children("button").remove();
     $("p#assessment").text("Loading...")
     let metrics = get_metrics();
     send_metrics(metrics);
@@ -161,7 +162,15 @@ function statement() {
     $(".assess-box").empty().append('<p id="assessment"></p>')
   });
   var save = $('<button type="button" class="btn btn-success id=save">Save</button>').click(function() {
-    console.log("Success");
+    $.ajax({
+      url: '/save_profit_curve',
+      contentType: "application/json; charset=utf-8",
+      type: 'POST',
+      data: JSON.stringify(threshold),
+      success: function() {
+        location.reload();
+      }
+    })
   });
   $(".assess-box").append(cancel).append(save)
 }
