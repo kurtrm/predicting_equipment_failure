@@ -1,5 +1,8 @@
 "use strict";
 
+$(".results").hide()
+
+
 let get_form_inputs = function() {
     let veg = $("input:checked");
     let age = $("input#Age").val();
@@ -9,7 +12,7 @@ let get_form_inputs = function() {
         inputs[veg[i].name] = veg[i].value;
         } else {        
         inputs[veg[i].id] = veg[i].value;
-        }
+        };
     };
     inputs["Age"] = age;
     return inputs;
@@ -28,6 +31,7 @@ let send_form_inputs = function(inputs) {
 };
 
 let display_prediction = function(data) {
+    $(".results").show()
     $("span#probability").html(data.probability)
     $("span#threshold").html(data.threshold)
     if (data.probability < data.threshold) {

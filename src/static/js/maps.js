@@ -1,7 +1,7 @@
 "use strict";
 var map;
 function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById('mapblock'), {
     center: {lat: 33.746511, lng: -84.388339}, 
     zoom: 9
   });
