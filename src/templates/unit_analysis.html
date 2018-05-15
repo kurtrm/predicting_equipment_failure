@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>New Transformer</title>
- <link href="{{url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-<script
-src="https://code.jquery.com/jquery-3.3.1.min.js"
-integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-crossorigin="anonymous"></script>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
 <div class="container">
   <div class="form-group">
     <div class="col-md-6 mb-3">
@@ -193,10 +185,8 @@ crossorigin="anonymous"></script>
     <h6>Assessment</h6>
     <p><span id="assessment"></span></p>
 </div>
-    <script src="{{url_for('static', filename='vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="{{url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-    <script src="{{url_for('static', filename='js/new_transformer.js')}}"></script>
-</body>
-</html>
+{% endblock %}
+
+{% block unit_analysis %}
+<script src="{{url_for('static', filename='js/new_transformer.js')}}"></script>
+{% endblock %}

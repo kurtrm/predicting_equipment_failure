@@ -17,7 +17,8 @@
   <link href="{{url_for('static', filename='vendor/datatables/dataTables.bootstrap4.css')}}" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="{{url_for('static', filename='css/sb-admin.css')}}" rel="stylesheet">
-  <link href="{{url_for('static', filename='css/profit_curve.css')}}" rel="stylesheet">
+  <link href="{{url_for('static', filename='css/profit_curve.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/maps.css') }}" rel="stylesheet">
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -850,9 +851,14 @@
     <script src="{{url_for('static', filename='vendor/datatables/dataTables.bootstrap4.js')}}"></script>
     <!-- Custom scripts for all pages-->
     <script src="{{url_for('static', filename='js/sb-admin.min.js')}}"></script>
+    {% block map_scripts %}
+    {% endblock %}
     <!-- Custom scripts for this page-->
-    <script src="{{url_for('static', filename='js/profit_curve.js')}}"></script>
-    
+    {% block profit_scripts %}
+    {% endblock %}
+    {% block unit_analysis %}
+    {% endblock %}
+
   </div>
 </body>
 

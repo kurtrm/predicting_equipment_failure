@@ -1,4 +1,4 @@
-{% extends "index.html" %}
+{% extends "base.html" %}
 
 {% block content %}
 <svg width="960" height="500"></svg>
@@ -10,4 +10,8 @@
 <input id="repair" />
 <button type="button" class="btn btn-success navbar-right" id="calculate">Recalculate</button>
 <span id="example"></span>
+{% endblock %}
+
+{% block profit_scripts %}
+<script src="{{url_for('static', filename='js/profit_curve.js')}}"></script>
 {% endblock %}
