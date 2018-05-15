@@ -27,13 +27,13 @@ def show_chart():
     return render_template('chart.html')
 
 
-@application.route('/new_transformer')
-def new_transformer():
+@application.route('/unit_analysis')
+def unit_analysis():
     """
     Renders a form to receive inputs on a transformer,
     then outputs a prediction.
     """
-    return render_template('new_transformer.html')
+    return render_template('unit_analysis.html')
 
 
 @application.route('/transformer_prediction', methods=['POST'])
@@ -66,7 +66,7 @@ def transformer_prediction():
 
 
 @application.route('/profit_curve')
-def show_profit_curve():
+def profit_curve():
     """
     This route renders the profit curve template.
     """
@@ -101,7 +101,8 @@ def show_map():
     """
     try:
         with open('/home/kurtrm/.secrets/map.yaml', 'r') as f:
-            key = yaml.load(f)
+            yaml_creds = yaml.load(f)
+            key = yaml_creds['API_KEY']
     except FileNotFoundError:
         key = os.environ['API_KEY']
 
@@ -109,7 +110,7 @@ def show_map():
 
 
 @application.route('/index')
-def show_index():
+def index_page():
     """
     Test for bootstrap template.
     """
