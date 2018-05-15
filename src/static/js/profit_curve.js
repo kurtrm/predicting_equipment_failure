@@ -47,6 +47,14 @@ let draw = function(data) {
       .x(d => x(d.threshold))
       .y(d => y(d.loss));
 
+  var y_max = d3.max(data, d => d.loss);
+  var x_val = data.filter(d => d.loss === y_max)[0].threshold;
+  var horiz = [{"x1": 0.0, "y1": y_max}, {"x1": x_val, "y1": y_max}]
+
+  var horiz_line = d3.line()
+      .x(d => x(d.x1))
+      .y(d => y(d.y1));
+
   var g = svg.append("g")
       .attr("transform", "translate(" + (margin.left + 50) + "," + margin.top + ")");
 
@@ -88,6 +96,13 @@ let draw = function(data) {
 
   line_stuff.enter().append("path").classed("line", true)
              .merge(line_stuff);
+
+  g.append("path")
+      .datum(horiz)
+      .attr("class", "horiz_line")
+      .style("stroke-dasharray", ("3, 3"))
+      .attr("d", horiz_line);
+
 
   g.selectAll(".line")
     .transition()
