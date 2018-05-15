@@ -18,3 +18,8 @@
 .vert_line {
     stroke: black;
 }
+
+.max_thresh {
+    font-family: Arial;
+    font-size: 12px;
+}

@@ -28,13 +28,6 @@ d3.json("static/data/thresh_losses.json", function(thisData) {
   draw(thisData);
 });
 
-let get_metrics = function() {
-  let revenue = $("input#revenue").val()
-  let maintenance = $("input#maintenance").val()
-  let repair = $("input#repair").val()
-  return {"user_input": [revenue, maintenance, repair]}
-};
-
 let draw = function(data) {
   $("svg").empty()
   var x = d3.scaleLinear()
@@ -114,6 +107,14 @@ let draw = function(data) {
       .style("stroke-dasharray", ("3, 3"))
       .attr("d", vert_line);
 
+  g.append("text")
+      .attr("class", "max_thresh")
+      .attr("x", x(x_val))
+      .attr("dx", "2em")
+      .attr("y", y(y_max))
+      .style("text-anchor", "end")
+      .text(Math.round(x_val * 100) / 100);
+
 
   g.selectAll(".line")
     .transition()
@@ -121,14 +122,15 @@ let draw = function(data) {
     .ease(d3.easeLinear)
     .attr("d", line);
 
+
+};
+
   $(document).ready(function() {
     $("button#calculate").click(function() {
       let metrics = get_metrics();
       send_metrics(metrics);
       })
     })
-
-};
 
 let send_metrics = function(metrics) {
   $.ajax({
@@ -140,4 +142,11 @@ let send_metrics = function(metrics) {
       draw(data);
     }
   });
+}
+
+let get_metrics = function() {
+  let revenue = $("input#revenue").val()
+  let maintenance = $("input#maintenance").val()
+  let repair = $("input#repair").val()
+  return {"user_input": [revenue, maintenance, repair]}
 };
