@@ -20,11 +20,11 @@ model = joblib.load('static/models/final_grad_boost.pkl')
 
 
 @application.route('/')
-def show_chart():
+def index_page():
     """
-    This route renders the chart template.
+    Test for bootstrap template.
     """
-    return render_template('chart.html')
+    return render_template('index.html')
 
 
 @application.route('/unit_analysis')
@@ -109,19 +109,13 @@ def show_map():
     return render_template('map.html', API_KEY=key)
 
 
-@application.route('/index')
-def index_page():
-    """
-    Test for bootstrap template.
-    """
-    return render_template('index.html')
-
 @application.route('/login')
 def login():
     """
     Render template for login page.
     """
     return render_template('login.html')
+
 
 if __name__ == '__main__':
     application.run(host='0.0.0.0', port=8080, debug=True)
