@@ -105,18 +105,12 @@ variable. They are not hoisted. */
           d = x0 - d0.fpr > d1.fpr - x0 ? d1: d0;
       focus.attr("transform", "translate(" + x(d.fpr) + "," + y(d.tpr) + ")");
 
-//  This is the line that will display a dollar value
-      focus.select("text").text(() => d.fpr);
-// Probably: focus.select("text").text(() => -$1000 * d.fn + -$100 * d.fp + $900 * d.tp + 1 * d.tn)
+      focus.select("text").text(() => Math.round(d.fpr * 100) / 100);
 
-      let true_pos = document.getElementById("TP");  // replace with jQuery
-      let false_pos = document.getElementById("FP"); // replace with jQuery
-      let true_neg = document.getElementById("TN");  // replace with jQuery
-      let false_neg = document.getElementById("FN"); // replace with jQuery
-      true_pos.innerHTML = d.fpr;
-      false_pos.innerHTML = d.fpr;
-      true_neg.innerHTML = d.fpr;
-      false_neg.innerHTML = d.fpr;
+      $("#TP").html = d.fpr;
+      $("#FP").html = d.fpr;
+      $("#TN").html = d.fpr;
+      $("#FN").html = d.fpr;
   }
 
 });
