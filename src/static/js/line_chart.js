@@ -1,9 +1,10 @@
 "use strict";
+(function(window, document) {
 // I leaned heavily on D3 documentation and lots of examples to generate this code.
 
 var bisect = d3.bisector((d) => d.fpr).right;
 
-var svg = d3.select("svg"),
+var svg = d3.select("svg#myAreaChart"),
     margin = {top: 20, right: 20, bottom: 30, left: 20},
     width = +svg.attr("width") - 400 - margin.left - margin.right,
     height = +svg.attr("height") - margin.top - margin.bottom;
@@ -130,3 +131,4 @@ variable. They are not hoisted. */
   }
 
 });
+})(window, document);

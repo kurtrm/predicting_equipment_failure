@@ -15,9 +15,22 @@ my_params = {'dbname': os.environ['DB_NAME'],
              'port': os.environ['DB_PORT']}
 
 
+def fetch_all_threshold() -> tuple:
+    """
+    Get all the data from the threshold table (1 row)
+    """
+    conn = pg2.connect(**my_params)
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM threshold;')
+    fetched = cur.fetchone()
+    conn.close()
+
+    return fetched
+
+
 def select_threshold() -> tuple:
     """
-    Get the threshold value from the treshold table.
+    Get the threshold value from the threshold table.
     """
     conn = pg2.connect(**my_params)
     cur = conn.cursor()
