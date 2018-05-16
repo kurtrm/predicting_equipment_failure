@@ -1,6 +1,4 @@
 "use strict";
-// $(function() {
-
   function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: 33.746511, lng: -84.388339}, 
@@ -85,5 +83,3 @@
     });
 
   }
-//   google.maps.event.addDomListener(window, 'load', initMap);
-// });
