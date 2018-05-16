@@ -1,9 +1,6 @@
 "use strict";
 
-/*
-This code is not DRY. the d3.json internals 
-
-*/
+// I leaned heavily on D3 documentation and lots of examples to generate this code.
 
 var svg = d3.select("svg"),
     margin = {top: 20, right: 20, bottom: 30, left: 20},
@@ -55,8 +52,6 @@ let draw = function(data) {
 
   var g = svg.append("g")
       .attr("transform", "translate(" + (margin.left + 50) + "," + margin.top + ")");
-
-  d3.selectAll("g").transition().duration(3000).ease(d3.easeLinear);
   
   x.domain([0, d3.max(data, d => d.threshold)]);
   y.domain([d3.max(data, d => d.loss), d3.min(data, d => d.loss)]);
@@ -81,19 +76,28 @@ let draw = function(data) {
    .append("text")
      .attr("class", "axis-title")
      .attr("transform", "rotate(-90)")
-     .attr("y", -40)
-     .attr("dy", ".71em")
-     .attr("x", -height/2 + 40)
-     .attr("dx", ".71em")
+     .attr("y", -42)
+     .attr("dy", ".1em")
+     .attr("x", -height/2 + 30)
+     .attr("dx", ".1em")
      .style("text-anchor", "end")
      .attr("fill", "#5D6971")
-     .text("Profit ($)");
+     .text("Cost ($)");
 
   var line_stuff = g.selectAll(".line")
       .data([data]);
 
   line_stuff.enter().append("path").classed("line", true)
-             .merge(line_stuff);
+             .merge(line_stuff)
+             .attr("d", line)
+             .attr("fill", "none")
+             .attr("stroke", "black")
+             .attr("stroke-dasharray", function(d) {
+               return this.getTotalLength()
+             })
+             .attr("stroke-dashoffset", function(d) {
+               return this.getTotalLength()
+             });
 
   g.append("path")
       .datum(horiz)
@@ -118,9 +122,9 @@ let draw = function(data) {
 
   g.selectAll(".line")
     .transition()
-    .duration(10000)
+    .duration(1000)
     .ease(d3.easeLinear)
-    .attr("d", line);
+    .attr("stroke-dashoffset", 0);
 
 };
 

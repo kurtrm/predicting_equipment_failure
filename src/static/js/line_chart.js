@@ -63,10 +63,26 @@ d3.json("/retrieve_roc", function(thisData) {
      .attr("fill", "#5D6971")
      .text("True Positive Rate (TPR)");
 
-  g.append("path")
-      .datum(thisData)
-      .attr("class", "line")
-      .attr("d", line1);
+  var roc_line = g.selectAll(".line")
+      .data([thisData]);
+
+  roc_line.enter().append("path").classed("line", true)
+           .merge(roc_line)
+           .attr("d", line1)
+           .attr("fill", "none")
+           .attr("stroke", "black")
+           .attr("stroke-dasharray", function(d){
+            return this.getTotalLength()
+           })
+           .attr("stroke-dashoffset", function(d){
+            return this.getTotalLength()
+           });
+
+  g.selectAll(".line")
+    .transition()
+    .duration(1000)
+    .ease(d3.easeLinear)
+    .attr("stroke-dashoffset", 0);
 
   g.append("path")
       .datum(thisData)
