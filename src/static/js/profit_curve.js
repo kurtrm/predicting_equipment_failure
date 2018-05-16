@@ -1,9 +1,6 @@
 "use strict";
 
-/*
-This code is not DRY. the d3.json internals 
-
-*/
+// I leaned heavily on D3 documentation and lots of examples to generate this code.
 
 var svg = d3.select("svg"),
     margin = {top: 20, right: 20, bottom: 30, left: 20},
