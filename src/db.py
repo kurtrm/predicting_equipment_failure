@@ -21,8 +21,22 @@ def select_threshold() -> tuple:
     """
     conn = pg2.connect(**my_params)
     cur = conn.cursor()
-    cur.execute('SELECT value FROM threshold;')
+    cur.execute('SELECT threshold FROM threshold;')
     fetched = cur.fetchone()
+    conn.close()
+
+    return fetched
+
+
+def fetch_test_data() -> List[tuple]:
+    """
+    Fetch all test set data to perform cost benefit
+    calculations.
+    """
+    conn = pg2.connect(**my_params)
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM testset;')
+    fetched = cur.fetchall()
     conn.close()
 
     return fetched
@@ -54,14 +68,26 @@ def get_roc_data() -> List[tuple]:
     return fetched
 
 
-def update_threshold(threshold: str) -> None:
+def update_threshold(threshold: str,
+                     cost: str,
+                     revenue: str,
+                     maintenance: str,
+                     repair: str) -> None:
     """
     Update the threshold value in the database.
     """
     conn = pg2.connect(**my_params)
     cur = conn.cursor()
-    update_statement = 'UPDATE threshold SET value = %s WHERE id = 1;'
-    cur.execute(update_statement, (float(threshold),))
+    joined_args = ','.join(['%s'] * 5)  # 5 args to the function
+    format_chunk = f' = ({joined_args}) WHERE id = 1;'
+    update_statement = ('UPDATE threshold'
+                        ' SET (threshold, cost, revenue, maintenance, repair)' +
+                        format_chunk)
+    cur.execute(update_statement, (threshold,
+                                   cost,
+                                   revenue,
+                                   maintenance,
+                                   repair))
     conn.commit()
     conn.close()
 

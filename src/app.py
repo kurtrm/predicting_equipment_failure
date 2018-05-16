@@ -3,8 +3,6 @@ Basic flask app to display D3 chart.
 """
 import os
 
-import yaml
-import pandas as pd
 import numpy as np
 from sklearn.externals import joblib
 from flask import (Flask,
@@ -26,7 +24,8 @@ def index_page():
     """
     Test for bootstrap template.
     """
-    return render_template('index.html')
+    fetched = db.select_threshold()
+    return render_template('index.html', threshold=fetched[0])
 
 
 @application.route('/unit_analysis')
@@ -84,9 +83,8 @@ def make_profit_curve():
     """
     data = request.json
     revenue, maintenance, repair = [float(x) for x in data['user_input']]
-    test_set = pd.read_csv('static/data/test_set.csv',
-                           sep=';',
-                           header=None).values
+    fetched = db.fetch_test_data()
+    test_set = np.array(fetched)[:, 1:]
     X_test, y_test = test_set[:, :-1], test_set[:, -1]
     cost_matrix = generate_cost_matrix(revenue, maintenance, repair)
     thresholds, totals = generate_profit_curve(cost_matrix,
@@ -102,13 +100,7 @@ def show_map():
     """
     Show map of all transformers.
     """
-    try:
-        with open('/home/kurtrm/.secrets/map.yaml', 'r') as f:
-            yaml_creds = yaml.load(f)
-            key = yaml_creds['API_KEY']
-    except FileNotFoundError:
-        key = os.environ['API_KEY']
-
+    key = os.environ['API_KEY']
     return render_template('map.html', API_KEY=key)
 
 
@@ -147,7 +139,11 @@ def save_profit_curve():
     Save the data from the profit curve page.
     """
     data = request.json
-    db.update_threshold(data['threshold'])
+    threshold = float(data['threshold'])
+    revenue, maintenance, repair = [float(x)
+                                    for x in data["metrics"]["user_input"]]
+    max_cost = max([num['loss'] for num in data['data']])
+    db.update_threshold(threshold, max_cost, revenue, maintenance, repair)
     db.purge_update_profit_curve(data['data'])
     return '200 OK'
 

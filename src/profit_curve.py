@@ -79,8 +79,15 @@ def generate_profit_curve(cost_matrix,
     """
     thresholds = np.linspace(0, 1, n_thresholds)
     totals = []
-    for threshold in thresholds:
+    thresholds_idx = []
+    minimum = float('inf')
+    for idx, threshold in enumerate(thresholds):
         iter_conf_matrix = confusion_matrix(model, X_test, y_test, threshold)
-        totals.append(sum_payout(cost_matrix, iter_conf_matrix))
+        payout = sum_payout(cost_matrix, iter_conf_matrix)
+        if payout <= minimum:
+            minimum = payout
+        else:
+            thresholds_idx.append(idx)
+            totals.append(payout)
 
-    return thresholds.tolist(), totals
+    return thresholds[thresholds_idx].tolist(), totals
