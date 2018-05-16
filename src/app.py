@@ -13,7 +13,9 @@ from flask import (Flask,
                    request,
                    jsonify)
 
+import db
 from profit_curve import generate_cost_matrix, generate_profit_curve
+
 
 application = Flask(__name__)
 
@@ -59,14 +61,10 @@ def transformer_prediction():
             listy.append(True)
         else:
             listy.append(False)
-
-    conn = pg2.connect(dbname='kurtrm', user='kurtrm', host='localhost')
-    cur = conn.cursor()
-    cur.execute('SELECT value FROM threshold;')
-    fetched = cur.fetchall()
-    conn.close()
-    threshold = fetched[0][0]
+    fetched = db.select_threshold()
+    threshold = fetched[0]
     probs = model.predict_proba(np.array(listy).reshape(1, -1))[:, 1]
+
     return jsonify({'threshold': f'{threshold * 100}',
                     'probability': f'{probs[0] * 100:.2f}'})
 
@@ -129,12 +127,7 @@ def profit_table_retrieval():
     Retrieves data from database and returns a jsonified list of dictionaries
     back to d3.
     """
-    conn = pg2.connect(dbname='kurtrm', user='kurtrm', host='localhost')
-    cur = conn.cursor()
-    cur.execute('SELECT * FROM profit_curve;')
-    fetched = cur.fetchall()
-    conn.close()
-    # import pdb; pdb.set_trace()
+    fetched = db.get_profit_curve_data()
     return jsonify([{'loss': loss, 'threshold': threshold}
                     for _, loss, threshold in fetched])
 
@@ -143,11 +136,7 @@ def profit_table_retrieval():
 def roc_table_retrieval():
     """
     """
-    conn = pg2.connect(dbname='kurtrm', user='kurtrm', host='localhost')
-    cur = conn.cursor()
-    cur.execute('SELECT * FROM rocdata;')
-    fetched = cur.fetchall()
-    conn.close()
+    fetched = db.get_roc_data()
     return jsonify([{'fpr': fpr, 'lin': lin, 'thresh': thresh, 'tpr': tpr}
                     for _, fpr, lin, thresh, tpr in fetched])
 
@@ -157,19 +146,8 @@ def save_profit_curve():
     """
     """
     data = request.json
-    conn = pg2.connect(dbname='kurtrm', user='kurtrm', host='localhost')
-    cur = conn.cursor()
-    update_statement = 'UPDATE threshold SET value = %s WHERE id = 1;'
-    cur.execute(update_statement, (float(data["threshold"]),))
-    conn.commit()
-    cur.execute('DELETE FROM profit_curve;')
-    tupled_data = [(record['loss'], record['threshold'])
-                   for record in data['data']]
-    format_str = ','.join(['%s'] * len(tupled_data))
-    insert_statement = f'INSERT INTO profit_curve(loss, threshold) VALUES {format_str}'
-    cur.execute(cur.mogrify(insert_statement, tupled_data))
-    conn.commit()
-    conn.close()
+    db.update_threshold(data['threshold'])
+    db.purge_update_profit_curve(data['data'])
     return '200 OK'
 
 
