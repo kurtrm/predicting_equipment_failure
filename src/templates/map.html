@@ -3,10 +3,25 @@
 {% block title %}Map{% endblock %}
 
 {% block content %}
-  <div id="mapblock"></div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3"><p>TEXT</p></div>
+      <div class="col-sm-6 embed-responsive embed-responsive-4by3">
+        <div id="map-container" class="embed-responsive-item">
+          <div id="map"></div>
+        </div> 
+      </div>
+    <div class="col-sm-2"><p>TEXT</p></div>
+  </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12"></div>
+    </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
-    <script src="{{ url_for('static', filename='js/maps.js') }}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY}}&callback=initMap"></script>
+  <script src="{{ url_for('static', filename='js/maps.js') }}"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY}}&callback=initMap"></script>
 {% endblock %}

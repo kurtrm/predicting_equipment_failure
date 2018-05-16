@@ -24,8 +24,14 @@ def index_page():
     """
     Test for bootstrap template.
     """
-    fetched = db.select_threshold()
-    return render_template('index.html', threshold=fetched[0])
+    _, threshold, cost, revenue, maintenance, repair, time = db.fetch_all_threshold()
+    return render_template('index.html',
+                           threshold=threshold,
+                           cost=-cost,
+                           revenue=revenue,
+                           maintenance=-maintenance,
+                           repair=-repair,
+                           time=time)
 
 
 @application.route('/unit_analysis')
@@ -146,6 +152,18 @@ def save_profit_curve():
     db.update_threshold(threshold, max_cost, revenue, maintenance, repair)
     db.purge_update_profit_curve(data['data'])
     return '200 OK'
+
+
+@application.route('/map_data', methods=['GET'])
+def get_map_data():
+    """
+    Retrieves map data from the database.
+    """
+    fetched = db.fetch_map_data()
+    return jsonify([{"Latitude": latitude,
+                     "Longitude": longitude,
+                     "Status": status}
+                    for _, latitude, longitude, status in fetched])
 
 
 if __name__ == '__main__':

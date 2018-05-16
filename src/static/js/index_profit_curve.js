@@ -1,5 +1,6 @@
 "use strict";
 (function(window, document) {
+
 // I leaned heavily on D3 documentation and lots of examples to generate this code.
 
   var svg = d3.select("#profit_curve"),
@@ -26,7 +27,7 @@
   });
 
   let draw = function(data) {
-    $("svg").empty()
+    $("svg#profit_curve").empty()
     var x = d3.scaleLinear()
         .range([0, width]);
 
@@ -127,56 +128,4 @@
       .attr("stroke-dashoffset", 0);
 
   };
-
-  $(document).ready(function() {
-    $("button#calculate").click(function() {
-      $(".assess-box").children("button").remove();
-      $("p#assessment").text("Loading...")
-      let metrics = get_metrics();
-      send_metrics(metrics);
-    })
-  })
-
-  let send_metrics = function(metrics) {
-    $.ajax({
-      url: '/generate',
-      contentType: "application/json; charset=utf-8",
-      type: 'POST',
-      data: JSON.stringify(metrics),
-      success: function(data) {
-        draw(data);
-        statement(data);
-      }
-    });
-  }
-
-  let get_metrics = function() {
-    let revenue = $("input#revenue").val()
-    let maintenance = $("input#maintenance").val()
-    let repair = $("input#repair").val()
-    return {"user_input": [revenue, maintenance, repair]}
-  };
-
-  function statement(data) {
-    var threshold = $("text.max_thresh").text();
-    var threshold_statement = threshold + " is the optimal threshold for the given revenue, maintenance, and repair costs. Would you like to save this threshold?"
-    $("p#assessment").text(threshold_statement)
-    var cancel = $('<button type="button" class="btn btn-danger id=cancel">Cancel</button>').click(function() {
-      $(".assess-box").empty().append('<p id="assessment"></p>')
-    });
-    var save = $('<button type="button" class="btn btn-success id=save">Save</button>').click(function() {
-      $.ajax({
-        url: '/save_profit_curve',
-        contentType: "application/json; charset=utf-8",
-        type: 'POST',
-        data: JSON.stringify({"threshold": threshold,
-                              "data": data,
-                              "metrics": get_metrics()}),
-        success: function() {
-          location.reload();
-        }
-      })
-    });
-    $(".assess-box").append(cancel).append(save)
-  }
 })(window, document);
