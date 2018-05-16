@@ -3,8 +3,6 @@ Basic flask app to display D3 chart.
 """
 import os
 
-import yaml
-import pandas as pd
 import numpy as np
 from sklearn.externals import joblib
 from flask import (Flask,
@@ -102,13 +100,7 @@ def show_map():
     """
     Show map of all transformers.
     """
-    try:
-        with open('/home/kurtrm/.secrets/map.yaml', 'r') as f:
-            yaml_creds = yaml.load(f)
-            key = yaml_creds['API_KEY']
-    except FileNotFoundError:
-        key = os.environ['API_KEY']
-
+    key = os.environ['API_KEY']
     return render_template('map.html', API_KEY=key)
 
 
