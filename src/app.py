@@ -6,7 +6,6 @@ import os
 import yaml
 import pandas as pd
 import numpy as np
-import psycopg2 as pg2
 from sklearn.externals import joblib
 from flask import (Flask,
                    render_template,
@@ -135,6 +134,7 @@ def profit_table_retrieval():
 @application.route('/retrieve_roc', methods=['GET'])
 def roc_table_retrieval():
     """
+    Retrieve roc data for display by d3.
     """
     fetched = db.get_roc_data()
     return jsonify([{'fpr': fpr, 'lin': lin, 'thresh': thresh, 'tpr': tpr}
@@ -144,6 +144,7 @@ def roc_table_retrieval():
 @application.route('/save_profit_curve', methods=['POST'])
 def save_profit_curve():
     """
+    Save the data from the profit curve page.
     """
     data = request.json
     db.update_threshold(data['threshold'])

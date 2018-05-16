@@ -1,10 +1,12 @@
 """
 File that contains various SQL commands via psycopg2.
 """
+from typing import List
+
 import psycopg2 as pg2
 
 
-def select_threshold():
+def select_threshold() -> tuple:
     """
     Get the threshold value from the treshold table.
     """
@@ -17,7 +19,7 @@ def select_threshold():
     return fetched
 
 
-def get_profit_curve_data():
+def get_profit_curve_data() -> List[tuple]:
     """
     Get all the data from the profit curve table.
     """
@@ -30,7 +32,7 @@ def get_profit_curve_data():
     return fetched
 
 
-def get_roc_data():
+def get_roc_data() -> List[tuple]:
     """
     Retrieve all the data from the rocdata table.
     """
@@ -43,7 +45,7 @@ def get_roc_data():
     return fetched
 
 
-def update_threshold(threshold):
+def update_threshold(threshold: str) -> None:
     """
     Update the threshold value in the database.
     """
@@ -55,7 +57,7 @@ def update_threshold(threshold):
     conn.close()
 
 
-def purge_update_profit_curve(data):
+def purge_update_profit_curve(data: list) -> None:
     """
     Purge all the data from the profit curve table then
     insert new data.
