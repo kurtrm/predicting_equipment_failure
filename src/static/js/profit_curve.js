@@ -165,7 +165,9 @@ function statement(data) {
       url: '/save_profit_curve',
       contentType: "application/json; charset=utf-8",
       type: 'POST',
-      data: JSON.stringify({"threshold": threshold, "data": data}),
+      data: JSON.stringify({"threshold": threshold,
+                            "data": data,
+                            "metrics": get_metrics()}),
       success: function() {
         location.reload();
       }

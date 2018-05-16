@@ -70,13 +70,17 @@ FROM '/mnt/c/Users/kurtrm/projects/predicting_equipment_failure/src/static/data/
 
 CREATE TABLE IF NOT EXISTS threshold
 (
-id serial NOT NULL,
-value REAL
+  id serial NOT NULL,
+  threshold REAL,
+  cost INTEGER,
+  revenue REAL,
+  maintenance REAL,
+  repair REAL
 );
 
-INSERT INTO threshold(value)
+INSERT INTO threshold(threshold, cost, revenue, maintenance, repair)
 VALUES
-  (.3);
+  (.3, 3500, 15.0, -25.0, -50.0);
 
 UPDATE threshold
 SET value = .4

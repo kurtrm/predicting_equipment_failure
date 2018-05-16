@@ -26,7 +26,8 @@ def index_page():
     """
     Test for bootstrap template.
     """
-    return render_template('index.html')
+    fetched = db.select_threshold()
+    return render_template('index.html', threshold=fetched[0])
 
 
 @application.route('/unit_analysis')
@@ -146,7 +147,11 @@ def save_profit_curve():
     Save the data from the profit curve page.
     """
     data = request.json
-    db.update_threshold(data['threshold'])
+    threshold = float(data['threshold'])
+    revenue, maintenance, repair = [float(x)
+                                    for x in data["metrics"]["user_input"]]
+    max_cost = max([num['loss'] for num in data['data']])
+    db.update_threshold(threshold, max_cost, revenue, maintenance, repair)
     db.purge_update_profit_curve(data['data'])
     return '200 OK'
 
