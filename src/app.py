@@ -134,6 +134,7 @@ def profit_table_retrieval():
     cur.execute('SELECT * FROM profit_curve;')
     fetched = cur.fetchall()
     conn.close()
+    # import pdb; pdb.set_trace()
     return jsonify([{'loss': loss, 'threshold': threshold}
                     for _, loss, threshold in fetched])
 
@@ -150,16 +151,23 @@ def roc_table_retrieval():
     return jsonify([{'fpr': fpr, 'lin': lin, 'thresh': thresh, 'tpr': tpr}
                     for _, fpr, lin, thresh, tpr in fetched])
 
+
 @application.route('/save_profit_curve', methods=['POST'])
 def save_profit_curve():
     """
     """
     data = request.json
-    # import pdb; pdb.set_trace()
     conn = pg2.connect(dbname='kurtrm', user='kurtrm', host='localhost')
     cur = conn.cursor()
     update_statement = 'UPDATE threshold SET value = %s WHERE id = 1;'
-    cur.execute(update_statement, (data,))
+    cur.execute(update_statement, (float(data["threshold"]),))
+    conn.commit()
+    cur.execute('DELETE FROM profit_curve;')
+    tupled_data = [(record['loss'], record['threshold'])
+                   for record in data['data']]
+    format_str = ','.join(['%s'] * len(tupled_data))
+    insert_statement = f'INSERT INTO profit_curve(loss, threshold) VALUES {format_str}'
+    cur.execute(cur.mogrify(insert_statement, tupled_data))
     conn.commit()
     conn.close()
     return '200 OK'

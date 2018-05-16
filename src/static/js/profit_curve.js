@@ -141,7 +141,7 @@ let send_metrics = function(metrics) {
     data: JSON.stringify(metrics),
     success: function(data) {
       draw(data);
-      statement();
+      statement(data);
     }
   });
 }
@@ -153,12 +153,11 @@ let get_metrics = function() {
   return {"user_input": [revenue, maintenance, repair]}
 };
 
-function statement() {
+function statement(data) {
   var threshold = $("text.max_thresh").text();
   var threshold_statement = threshold + " is the optimal threshold for the given revenue, maintenance, and repair costs. Would you like to save this threshold?"
   $("p#assessment").text(threshold_statement)
   var cancel = $('<button type="button" class="btn btn-danger id=cancel">Cancel</button>').click(function() {
-    console.log("I heard you click cancel.");
     $(".assess-box").empty().append('<p id="assessment"></p>')
   });
   var save = $('<button type="button" class="btn btn-success id=save">Save</button>').click(function() {
@@ -166,7 +165,7 @@ function statement() {
       url: '/save_profit_curve',
       contentType: "application/json; charset=utf-8",
       type: 'POST',
-      data: JSON.stringify(threshold),
+      data: JSON.stringify({"threshold": threshold, "data": data}),
       success: function() {
         location.reload();
       }

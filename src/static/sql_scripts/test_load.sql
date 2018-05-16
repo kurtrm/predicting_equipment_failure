@@ -84,9 +84,9 @@
 
 CREATE TABLE IF NOT EXISTS profit_curve
 (
-id serial NOT NULL,
-loss INTEGER,
-threshold DOUBLE PRECISION
+  id serial NOT NULL,
+  loss INTEGER,
+  threshold DOUBLE PRECISION
 );
 
 COPY profit_curve(loss, threshold)
