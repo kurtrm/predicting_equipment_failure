@@ -47,6 +47,7 @@ let display_prediction = function(data) {
 };
 
 $("button#send").click(function() {
+    console.log('Here');
     let inputs = get_form_inputs();
     send_form_inputs(inputs);
 });

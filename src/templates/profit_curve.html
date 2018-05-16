@@ -3,6 +3,12 @@
 {% block title %}Cost-Benefit Analysis{% endblock %}
 
 {% block content %}
+<p>The threshold is what the model uses as a benchmark for classification.
+The model will make a prediction depending on whether the prediction probability is less than or greater than
+this threshold. The best way to determine the best value is cost-benefit analysis.
+Below, the optimal threshold is computed by analyzing revenue, maintenance, and repair costs.</p>
+<p>You will then have the option of saving this threshold. You can change this threshold as
+revenue and costs change over time.</p>
 <svg width="850" height="400"></svg>
 <p>Revenue: </p>
 <input id="revenue" />
@@ -12,6 +18,9 @@
 <input id="repair" />
 <button type="button" class="btn btn-success navbar-right" id="calculate">Recalculate</button>
 <span id="example"></span>
+<div class="container assess-box">
+    <p id="assessment"></p>
+</div>
 {% endblock %}
 
 {% block scripts %}

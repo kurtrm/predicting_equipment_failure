@@ -29,7 +29,7 @@ var line2 = d3.line()
 var g = svg.append("g")
     .attr("transform", "translate(" + (margin.left + 50) + "," + margin.top + ")");
 
-d3.json("static/data/roc_data.json", function(thisData) {
+d3.json("/retrieve_roc", function(thisData) {
 
   x.domain([0, d3.max(thisData, d => d.fpr)]);
   y.domain([0, d3.max(thisData, d => d.tpr)]);

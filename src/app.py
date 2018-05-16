@@ -12,7 +12,9 @@ from flask import (Flask,
                    request,
                    jsonify)
 
+import db
 from profit_curve import generate_cost_matrix, generate_profit_curve
+
 
 application = Flask(__name__)
 
@@ -58,9 +60,10 @@ def transformer_prediction():
             listy.append(True)
         else:
             listy.append(False)
-    # Need to save this threshold
-    threshold = .5  # Get threshold
+    fetched = db.select_threshold()
+    threshold = fetched[0]
     probs = model.predict_proba(np.array(listy).reshape(1, -1))[:, 1]
+
     return jsonify({'threshold': f'{threshold * 100}',
                     'probability': f'{probs[0] * 100:.2f}'})
 
@@ -115,6 +118,38 @@ def login():
     Render template for login page.
     """
     return render_template('login.html')
+
+
+@application.route('/retrieve_profit_curve', methods=['GET'])
+def profit_table_retrieval():
+    """
+    Retrieves data from database and returns a jsonified list of dictionaries
+    back to d3.
+    """
+    fetched = db.get_profit_curve_data()
+    return jsonify([{'loss': loss, 'threshold': threshold}
+                    for _, loss, threshold in fetched])
+
+
+@application.route('/retrieve_roc', methods=['GET'])
+def roc_table_retrieval():
+    """
+    Retrieve roc data for display by d3.
+    """
+    fetched = db.get_roc_data()
+    return jsonify([{'fpr': fpr, 'lin': lin, 'thresh': thresh, 'tpr': tpr}
+                    for _, fpr, lin, thresh, tpr in fetched])
+
+
+@application.route('/save_profit_curve', methods=['POST'])
+def save_profit_curve():
+    """
+    Save the data from the profit curve page.
+    """
+    data = request.json
+    db.update_threshold(data['threshold'])
+    db.purge_update_profit_curve(data['data'])
+    return '200 OK'
 
 
 if __name__ == '__main__':
