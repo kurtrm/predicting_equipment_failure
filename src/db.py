@@ -28,6 +28,20 @@ def select_threshold() -> tuple:
     return fetched
 
 
+def fetch_test_data() -> List[tuple]:
+    """
+    Fetch all test set data to perform cost benefit
+    calculations.
+    """
+    conn = pg2.connect(**my_params)
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM testset;')
+    fetched = cur.fetchall()
+    conn.close()
+
+    return fetched
+
+
 def get_profit_curve_data() -> List[tuple]:
     """
     Get all the data from the profit curve table.
