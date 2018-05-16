@@ -24,13 +24,14 @@ def index_page():
     """
     Test for bootstrap template.
     """
-    _, threshold, cost, revenue, maintenance, repair = db.fetch_all_threshold()
+    _, threshold, cost, revenue, maintenance, repair, time = db.fetch_all_threshold()
     return render_template('index.html',
                            threshold=threshold,
                            cost=-cost,
                            revenue=revenue,
                            maintenance=-maintenance,
-                           repair=-repair)
+                           repair=-repair,
+                           time=time)
 
 
 @application.route('/unit_analysis')

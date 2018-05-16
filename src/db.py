@@ -81,20 +81,21 @@ def get_roc_data() -> List[tuple]:
     return fetched
 
 
-def update_threshold(threshold: str,
-                     cost: str,
-                     revenue: str,
-                     maintenance: str,
-                     repair: str) -> None:
+def update_threshold(threshold: float,
+                     cost: int,
+                     revenue: float,
+                     maintenance: float,
+                     repair: float) -> None:
     """
     Update the threshold value in the database.
+    This function also updates the time at which the change was made.
     """
     conn = pg2.connect(**my_params)
     cur = conn.cursor()
-    joined_args = ','.join(['%s'] * 5)  # 5 args to the function
-    format_chunk = f' = ({joined_args}) WHERE id = 1;'
+    joined_args = ','.join(['%s'] * 5)  # 5 args to the statement
+    format_chunk = f' = ({joined_args}, NOW()) WHERE id = 1;'
     update_statement = ('UPDATE threshold'
-                        ' SET (threshold, cost, revenue, maintenance, repair)' +
+                        ' SET (threshold, cost, revenue, maintenance, repair, time_of_change)' +
                         format_chunk)
     cur.execute(update_statement, (threshold,
                                    cost,
