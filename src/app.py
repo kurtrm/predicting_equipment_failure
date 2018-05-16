@@ -154,5 +154,17 @@ def save_profit_curve():
     return '200 OK'
 
 
+@application.route('/map_data', methods=['GET'])
+def get_map_data():
+    """
+    Retrieves map data from the database.
+    """
+    fetched = db.fetch_map_data()
+    return jsonify([{"Latitude": latitude,
+                     "Longitude": longitude,
+                     "Status": status}
+                    for _, latitude, longitude, status in fetched])
+
+
 if __name__ == '__main__':
     application.run(host='0.0.0.0', port=8080, debug=True)

@@ -122,3 +122,16 @@ def purge_update_profit_curve(data: list) -> None:
     cur.execute(cur.mogrify(insert_statement, tupled_data))
     conn.commit()
     conn.close()
+
+
+def fetch_map_data() -> None:
+    """
+    Get all the map data to display on the map.
+    """
+    conn = pg2.connect(**my_params)
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM latlong;')
+    fetched = cur.fetchall()
+    conn.close()
+
+    return fetched

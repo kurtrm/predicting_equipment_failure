@@ -26,7 +26,7 @@
       fillOpacity: .6,
       scale: 1
     };
-    $.getJSON("../static/data/lat_long.json", function(d) {
+    $.getJSON("/map_data", function(d) {
     for (var i = 0; i < d.length; i++) {
         var marker = new google.maps.Marker({
         position: {lat: d[i]["Latitude"],
