@@ -95,6 +95,10 @@ def make_profit_curve():
     """
     data = request.json
     revenue, maintenance, repair = [float(x) for x in data['user_input']]
+    if maintenance > 0:
+        maintenance = -maintenance
+    if repair > 0:
+        repair = -repair
     fetched = db.fetch_test_data()
     test_set = np.array(fetched)[:, 1:]
     X_test, y_test = test_set[:, :-1], test_set[:, -1]
