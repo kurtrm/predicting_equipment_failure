@@ -1,29 +1,68 @@
 {% extends "base.html" %}
 
 {% block styling %}
-  <link href="{{ url_for('static', filename='css/profit_curve.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/profit_curve.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block title %}Cost-Benefit Analysis{% endblock %}
 
 {% block content %}
-<p>The threshold is what the model uses as a benchmark for classification.
-The model will make a prediction depending on whether the prediction probability is less than or greater than
-this threshold. The best way to determine the best value is cost-benefit analysis.
-Below, the optimal threshold is computed by analyzing revenue, maintenance, and repair costs.</p>
-<p>You will then have the option of saving this threshold. You can change this threshold as
-revenue and costs change over time.</p>
-<svg id="profit_curve" width="850" height="400"></svg>
-<p>Revenue: </p>
-<input id="revenue" />
-<p>Maintenance costs:</p>
-<input id="maintenance" />
-<p>Repair costs: </p>
-<input id="repair" />
-<button type="button" class="btn btn-success navbar-right" id="calculate">Recalculate</button>
-<span id="example"></span>
-<div class="container assess-box">
-    <p id="assessment"></p>
+<div class="container">
+  <div class="row">
+    <p>The threshold is what the model uses as a benchmark for classification.
+    The model will make a prediction depending on whether the prediction probability is less than or greater than
+    this threshold. The best way to determine the best value is cost-benefit analysis.
+    Below, the optimal threshold is computed by analyzing revenue, maintenance, and repair costs.</p>
+    <p>You will then have the option of saving this threshold. You can change this threshold as
+    revenue and costs change over time.</p>
+  </div>
+  <div class="row">
+    <div class="col-lg-7">
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fa fa-line-chart"></i> Metrics
+        </div>
+        <div class="card-body text-center">
+          <svg id="profit_curve" width="850" height="400"></svg>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fa fa-dollar"></i> Evaluate Threshold
+        </div>
+        <div class="card-body text-center">
+          <p>Revenue</p>
+          <input class="mb-3" type="number" id="revenue" />
+          <p>Maintenance costs</p>
+          <input class="mb-3" type="number" id="maintenance" />
+          <p>Repair costs</p>
+          <input type="number" id="repair" />
+          <div class="row">
+            <div class="col-md-12 mt-3 text-center">
+              <button type="button" class="btn btn-success" id="calculate">Calculate</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row assessment-card">
+    <div class="col-lg-12">
+      <div class="card mb-3">
+        <div class="card-header h4 text-center">
+          <i class="fa"></i>Assessment
+        </div>
+        <div class="card-body text-center">
+          <span id="example"></span>
+          <div class="container assess-box">
+            <p id="assessment"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
 

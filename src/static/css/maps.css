@@ -4,3 +4,11 @@
   height: 100%;
   width: 100%;
 }
+
+#green {
+    list-style: square url('../images/small_green_box.png');
+}
+
+#grey {
+    list-style: square url('../images/small_grey_box.png');
+}

@@ -31,7 +31,6 @@
                    lng: d[i]["Longitude"]},
         map: map,
         icon: (d[i]["Status"] === 1) ? green_square : grey_square
-        // title: 'Hello World!'
         }); 
       }
     });

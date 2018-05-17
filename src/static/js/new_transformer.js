@@ -32,23 +32,31 @@
 
     let display_prediction = function(data) {
         $(".results").show()
-        $("span#probability").html(data.probability)
-        $("span#threshold").html(data.threshold)
+        console.log(data.threshold);
+        $("span#probability").html(data.probability + "%")
+        $("span#threshold").html(data.threshold + "%")
         if (data.probability < data.threshold) {
-            var assess = "There is a " + data.probability + "% probability that this transformer will not incur additional costs." +
-                         " Additionally, based on the selected threshold of " + data.threshold + ", " + 
-                         "it is recommended that an enhanced preventive maintenance schedule be applied to this unit.";
+            $("span#probability").removeClass("text-success").addClass("text-danger")
+            var assess = "There is a " + data.probability + "% probability that this transformer will <b>not</b> incur additional costs." +
+                         " Additionally, based on the selected threshold of " + data.threshold + "%, " + 
+                         "it is recommended that an <b>enhanced preventive maintenance schedule</b> be applied to this unit.";
         } else {
-            var assess = "There is a " + data.probability + "% probability that this transformer will not incur additional costs." +
-                         " Additionally, based on the selected threshold of " + data.threshold + ", " + 
-                         "it is recommended that this unit maintain a normal preventive maintenance schedule.";
+            $("span#probability").removeClass("text-danger").addClass("text-success")
+            var assess = "There is a " + data.probability + "% probability that this transformer will <b>not</b> incur additional costs." +
+                         " Additionally, based on the selected threshold of " + data.threshold + "%, " + 
+                         "it is recommended that this unit maintain a <b>normal preventive maintenance schedule</b>.";
         }
         $("span#assessment").html(assess)
     };
 
     $("button#send").click(function() {
-        console.log('Here');
         let inputs = get_form_inputs();
+        if (inputs["Age"] === "" || isNaN(inputs["Age"]) || inputs["Age"] < 0) {
+            $(".invalid-tooltip").show();
+            return
+        } else {
+            $(".invalid-tooltip").hide();
+        };
         send_form_inputs(inputs);
     });
 })(window, document);

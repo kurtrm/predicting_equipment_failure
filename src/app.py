@@ -32,7 +32,7 @@ def index_page():
     fixed_time = utc.localize(time).astimezone(pacific)
     formatted_time = fixed_time.strftime('%Y-%m-%d %I:%M %p %Z')
     return render_template('index.html',
-                           threshold=threshold,
+                           threshold=threshold/100,
                            cost=-cost,
                            revenue=revenue,
                            maintenance=-maintenance,
@@ -75,7 +75,7 @@ def transformer_prediction():
     threshold = fetched[0]
     probs = model.predict_proba(np.array(listy).reshape(1, -1))[:, 1]
 
-    return jsonify({'threshold': f'{threshold * 100}',
+    return jsonify({'threshold': f'{threshold}',
                     'probability': f'{probs[0] * 100:.2f}'})
 
 
@@ -95,6 +95,10 @@ def make_profit_curve():
     """
     data = request.json
     revenue, maintenance, repair = [float(x) for x in data['user_input']]
+    if maintenance > 0:
+        maintenance = -maintenance
+    if repair > 0:
+        repair = -repair
     fetched = db.fetch_test_data()
     test_set = np.array(fetched)[:, 1:]
     X_test, y_test = test_set[:, :-1], test_set[:, -1]
