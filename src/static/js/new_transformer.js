@@ -32,16 +32,17 @@
 
     let display_prediction = function(data) {
         $(".results").show()
+        console.log(data.threshold);
         $("span#probability").html(data.probability + "%")
         $("span#threshold").html(data.threshold + "%")
         if (data.probability < data.threshold) {
-            $("span#probability").addClass("text-danger")
-            var assess = "There is a " + data.probability + "% probability that this transformer will not incur additional costs." +
+            $("span#probability").removeClass("text-success").addClass("text-danger")
+            var assess = "There is a " + data.probability + "% probability that this transformer will <b>not</b> incur additional costs." +
                          " Additionally, based on the selected threshold of " + data.threshold + "%, " + 
                          "it is recommended that an <b>enhanced preventive maintenance schedule</b> be applied to this unit.";
         } else {
-            $("span#probability").addClass("text-success")
-            var assess = "There is a " + data.probability + "% probability that this transformer will not incur additional costs." +
+            $("span#probability").removeClass("text-danger").addClass("text-success")
+            var assess = "There is a " + data.probability + "% probability that this transformer will <b>not</b> incur additional costs." +
                          " Additionally, based on the selected threshold of " + data.threshold + "%, " + 
                          "it is recommended that this unit maintain a <b>normal preventive maintenance schedule</b>.";
         }

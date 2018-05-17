@@ -182,6 +182,10 @@ function draw(data) {
       localStorage.setItem('metrics', JSON.stringify(get_metrics()));
       localStorage.setItem('cost', JSON.stringify(d3.max(data, d => d.loss)));
       localStorage.setItem('rightNow', JSON.stringify(new Date()));
+      location.reload();
+      // This code saved for posterity. This makes an ajax request to save data to a database.
+      // Until security is implemented, data is persisted in localstorage just to demonstrate functionality.
+
       // $.ajax({
       //   url: '/save_profit_curve',
       //   contentType: "application/json; charset=utf-8",
@@ -190,9 +194,10 @@ function draw(data) {
       //                         "data": data,
       //                         "metrics": get_metrics()}),
       //   success: function() {
-          location.reload();
+      //   location.reload();
       //   }
       // })
+
     });
     $(".assess-box").append(cancel).append(save)
   }

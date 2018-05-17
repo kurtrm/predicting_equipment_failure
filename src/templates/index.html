@@ -8,11 +8,39 @@
 {% block title %}My Dashboard{% endblock %}
 
 {% block content %}
-<div class="card mb-3">
-  <div class="card-header">
-    <i class="fa fa-area-chart"></i>ROC Curve</div>
-  <div class="card-body">
-    <svg id="myAreaChart" width="800" height="350"></svg>
+<div class="row">
+  <div class="col-lg-7">
+    <div class="card mb-3">
+      <div class="card-header">
+        <i class="fa fa-area-chart"></i>ROC Curve</div>
+      <div class="card-body">
+        <svg id="myAreaChart" width="800" height="350"></svg>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    <div class="card mb-3">
+      <div class="card-header">
+        <i class="fa fa-bar-chart"></i>Model Characteristics</div>
+      <div class="card-body">
+          <div class="col-sm-12 text-center my-auto">
+            <div class="h5 mb-0 text-primary" id="auc">Gradient Boosting</div>
+            <div class="small text-muted">Model Type</div>
+            <hr>
+            <div class="h5 mb-0 text-primary" id="auc">{{ threshold }}</div>
+            <div class="small text-muted">AUC</div>
+            <hr>
+            <div class="h5 mb-0 text-primary" id="precision">-${{ cost }}</div>
+            <div class="small text-muted">Precision</div>
+            <hr>
+            <div class="h5 mb-0 text-primary" id="recall">${{ revenue }}</div>
+            <div class="small text-muted">Recall</div>
+            <hr>
+            <div class="h5 mb-0 text-primary" id="specificity">-${{ repair }}</div>
+            <div class="small text-muted">Specificity</div>
+          </div>
+       </div>
+    </div>
   </div>
 </div>
 <div class="row">
@@ -20,7 +48,7 @@
     <!-- Example Bar Chart Card-->
     <div class="card mb-3">
       <div class="card-header">
-        <i class="fa fa-bar-chart"></i> Profit Curve</div>
+        <i class="fa fa-line-chart"></i> Profit Curve</div>
       <div class="card-body">
         <div class="row">
           <div class="col-sm-8 my-auto">
@@ -52,7 +80,7 @@
     <!-- Example Pie Chart Card-->
     <div class="card mb-3">
       <div class="card-header">
-        <i class="fa fa-pie-chart"></i>Other Stats</div>
+        <i class="fa fa-bullseye"></i> Precision vs. Recall</div>
       <div class="card-body">
         <canvas id="myPieChart" width="100%" height="100"></canvas>
       </div>

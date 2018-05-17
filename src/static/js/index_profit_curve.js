@@ -37,7 +37,7 @@ if (localStorage.getItem("data") === null) {
   var repair = metrics["user_input"][2];
   $("#threshold").html("0." + threshold);
   $("#cost").html("-$" + -cost);
-  $("#revenue").html(revenue);
+  $("#revenue").html("$" + revenue);
   $("#maintenance").html("-$" + -maintenance);
   $("#repair").html("-$" + -repair);
   $("#time").html(time);

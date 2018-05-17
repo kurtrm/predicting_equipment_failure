@@ -75,7 +75,7 @@ def transformer_prediction():
     threshold = fetched[0]
     probs = model.predict_proba(np.array(listy).reshape(1, -1))[:, 1]
 
-    return jsonify({'threshold': f'{threshold * 100}',
+    return jsonify({'threshold': f'{threshold}',
                     'probability': f'{probs[0] * 100:.2f}'})
 
 
