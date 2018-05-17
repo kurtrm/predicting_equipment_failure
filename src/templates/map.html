@@ -8,15 +8,25 @@
 {% block title %}Map{% endblock %}
 
 {% block content %}
-<div class="container">
-  <div class="row">
-    <div class="col-sm-3"><p>TEXT</p></div>
+<div class="container h-100">
+  <div class="row h-100 justify-content-center align-items-center">
+    <div class="col-sm-4 text-center">
+      <h6 class="text-center">Legend</h6>
+      <ul id="green">
+        <li class="small pull-left"><span class="align-top">Normal Maintenance Schedule</span></li>
+      </ul>
+      <ul id="grey">
+        <li class="small pull-left"><span class="align-top">Enhanced Maintenance Schedule</span></li>
+      </ul>
+    </div>
       <div class="col-sm-6 embed-responsive embed-responsive-4by3">
         <div id="map-container" class="embed-responsive-item">
           <div id="map"></div>
         </div> 
       </div>
-    <div class="col-sm-2"><p>TEXT</p></div>
+    <div class="col-sm-2">
+      <p></p>
+    </div>
   </div>
 </div>
 <div class="container">
