@@ -23,7 +23,8 @@ model = joblib.load('static/models/final_grad_boost.pkl')
 @application.route('/')
 def index_page():
     """
-    Test for bootstrap template.
+    Display the dashboard including roc and profit curve and
+    various other stats.
     """
     _, threshold, cost, revenue, maintenance, repair, time = db.fetch_all_threshold()
     utc = pytz.timezone('UTC')
