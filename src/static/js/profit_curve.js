@@ -181,6 +181,7 @@ function draw(data) {
       localStorage.setItem('threshold', JSON.stringify(threshold));
       localStorage.setItem('metrics', JSON.stringify(get_metrics()));
       localStorage.setItem('cost', JSON.stringify(d3.max(data, d => d.loss)));
+      localStorage.setItem('rightNow', JSON.stringify(new Date()));
       // $.ajax({
       //   url: '/save_profit_curve',
       //   contentType: "application/json; charset=utf-8",

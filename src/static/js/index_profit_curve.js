@@ -23,16 +23,15 @@
       .attr("transform", "translate(" + (margin.left + 50) + "," + margin.top + ")");
 
 if (localStorage.getItem("data") === null) {
-  console.log("database");
   d3.json("/retrieve_profit_curve", function(thisData) {
     draw(thisData);
   });
 } else {
-  console.log("local storage")
   var storage = JSON.parse(localStorage["data"]);
   var threshold = JSON.parse(localStorage["threshold"]);
   var cost = JSON.parse(localStorage["cost"]);
   var metrics = JSON.parse(localStorage["metrics"]);
+  var time = JSON.parse(localStorage["rightNow"]);
   var revenue = metrics[0];
   var maintenance = metrics[1];
   var repair = metrics[2];
@@ -41,6 +40,7 @@ if (localStorage.getItem("data") === null) {
   $("#revenue").html(revenue);
   $("#maintenance").html(maintenance);
   $("#repair").html(repair);
+  $("#time").html(time);
   draw(storage);
 };
 
