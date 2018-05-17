@@ -27,17 +27,17 @@
             <div class="h5 mb-0 text-primary" id="auc">Gradient Boosting</div>
             <div class="small text-muted">Model Type</div>
             <hr>
-            <div class="h5 mb-0 text-primary" id="auc">{{ threshold }}</div>
+            <div class="h5 mb-0 text-primary" id="auc">{{ auc }}</div>
             <div class="small text-muted">AUC</div>
             <hr>
-            <div class="h5 mb-0 text-primary" id="precision">-${{ cost }}</div>
+            <div class="h5 mb-0 text-primary" id="precision">{{ precision }}</div>
             <div class="small text-muted">Precision</div>
             <hr>
-            <div class="h5 mb-0 text-primary" id="recall">${{ revenue }}</div>
+            <div class="h5 mb-0 text-primary" id="recall">{{ recall }}</div>
             <div class="small text-muted">Recall</div>
             <hr>
-            <div class="h5 mb-0 text-primary" id="specificity">-${{ repair }}</div>
-            <div class="small text-muted">Specificity</div>
+            <div class="h5 mb-0 text-primary" id="f1">{{ f1 }}</div>
+            <div class="small text-muted">F1</div>
           </div>
        </div>
     </div>

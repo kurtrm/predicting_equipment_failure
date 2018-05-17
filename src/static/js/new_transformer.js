@@ -32,7 +32,9 @@
 
     let display_prediction = function(data) {
         $(".results").show()
-        console.log(data.threshold);
+        $("html, body").animate({
+          scrollTop: "+=250"},
+          100);
         $("span#probability").html(data.probability + "%")
         $("span#threshold").html(data.threshold + "%")
         if (data.probability < data.threshold) {

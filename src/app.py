@@ -13,6 +13,7 @@ from sklearn.externals import joblib
 
 from scripts import db
 from scripts.profit_curve import generate_cost_matrix, generate_profit_curve
+from scripts.model_metrics import get_auc_score, precision_recall_f1
 
 
 application = Flask(__name__)
@@ -26,6 +27,8 @@ def index_page():
     Display the dashboard including roc and profit curve and
     various other stats.
     """
+    auc = get_auc_score()
+    precision, recall, f1_score, _ = precision_recall_f1()
     _, threshold, cost, revenue, maintenance, repair, time = db.fetch_all_threshold()
     utc = pytz.timezone('UTC')
     pacific = pytz.timezone('US/Pacific')
@@ -37,7 +40,11 @@ def index_page():
                            revenue=revenue,
                            maintenance=-maintenance,
                            repair=-repair,
-                           time=formatted_time)
+                           time=formatted_time,
+                           auc=f'{auc:.2f}',
+                           precision=f'{precision:.2f}',
+                           recall=f'{recall:.2f}',
+                           f1=f'{f1_score:.2f}')
 
 
 @application.route('/unit_analysis')
