@@ -178,6 +178,9 @@ function draw(data) {
     });
     var save = $('<button type="button" class="btn btn-success ml-3" id="save">Save</button>').click(function() {
       localStorage.setItem('data', JSON.stringify(data));
+      localStorage.setItem('threshold', JSON.stringify(threshold));
+      localStorage.setItem('metrics', JSON.stringify(get_metrics()));
+      localStorage.setItem('cost', JSON.stringify(d3.max(data, d => d.loss)));
       // $.ajax({
       //   url: '/save_profit_curve',
       //   contentType: "application/json; charset=utf-8",
@@ -186,7 +189,7 @@ function draw(data) {
       //                         "data": data,
       //                         "metrics": get_metrics()}),
       //   success: function() {
-      //     location.reload();
+          location.reload();
       //   }
       // })
     });

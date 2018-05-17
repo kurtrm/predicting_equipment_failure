@@ -32,7 +32,7 @@ def index_page():
     fixed_time = utc.localize(time).astimezone(pacific)
     formatted_time = fixed_time.strftime('%Y-%m-%d %I:%M %p %Z')
     return render_template('index.html',
-                           threshold=threshold,
+                           threshold=threshold/100,
                            cost=-cost,
                            revenue=revenue,
                            maintenance=-maintenance,

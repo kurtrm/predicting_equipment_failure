@@ -27,24 +27,24 @@
             <svg id="profit_curve" width="800" height="350"></svg>
           </div>
           <div class="col-sm-4 text-center my-auto">
-            <div class="h5 mb-0 text-primary">{{ threshold }}</div>
+            <div class="h5 mb-0 text-primary" id="threshold">{{ threshold }}</div>
             <div class="small text-muted">Decision Threshold</div>
             <hr>
-            <div class="h5 mb-0 text-warning">-${{ cost }}</div>
+            <div class="h5 mb-0 text-warning" id="cost">-${{ cost }}</div>
             <div class="small text-muted">Simulated Total Cost</div>
             <hr>
-            <div class="h5 mb-0 text-success">${{ revenue }}</div>
+            <div class="h5 mb-0 text-success" id="revenue">${{ revenue }}</div>
             <div class="small text-muted">Estimated Revenue per Transformer</div>
             <hr>
-            <div class="h5 mb-0 text-danger">-${{ maintenance }}</div>
+            <div class="h5 mb-0 text-danger" id="maintenance">-${{ maintenance }}</div>
             <div class="small text-muted">Estimated Maintenance Cost per Transformer</div>
             <hr>
-            <div class="h5 mb-0 text-danger">-${{ repair }}</div>
+            <div class="h5 mb-0 text-danger" id="repair">-${{ repair }}</div>
             <div class="small text-muted">Estimated Repair Cost per Transformer</div>
           </div>
         </div>
       </div>
-      <div class="card-footer small text-muted">Updated {{ time }}</div>
+      <div class="card-footer small text-muted" id="time">Updated {{ time }}</div>
     </div>
     <!-- /Card Columns-->
   </div>
@@ -62,6 +62,6 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{{url_for('static', filename='js/index_profit_curve.js')}}"></script>
+  <script src="{{url_for('static', filename='js/index_profit_curve.js')}}"></script>
   <script src="{{url_for('static', filename='js/line_chart.js')}}"></script>
 {% endblock %}
