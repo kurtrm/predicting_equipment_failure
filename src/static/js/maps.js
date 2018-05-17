@@ -74,10 +74,11 @@
     controlUI.addEventListener('click', function() {
       if (flag) {
         map.setCenter({lat: 31.232117, lng: -84.210631});
-        controlText.innerHTML = 'Center ATL'
+        controlText.innerHTML = 'Center ATL';
         flag = false;
       } else {
       map.setCenter({lat: 33.746511, lng: -84.388339});
+        controlText.innerHTML = ' Center S. GA';
       flag = true;
     };
     });
