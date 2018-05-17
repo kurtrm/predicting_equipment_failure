@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 
+{% block styling %}
+  <link href="{{ url_for('static', filename='css/chart.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/profit_curve.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block title %}My Dashboard{% endblock %}
 
 {% block content %}

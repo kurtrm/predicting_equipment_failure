@@ -101,4 +101,4 @@ ENV/
 .mypy_cache/
 
 # data
-/src/static/data/*
+/src/static/data

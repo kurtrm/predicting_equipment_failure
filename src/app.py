@@ -9,6 +9,7 @@ from flask import (Flask,
                    render_template,
                    request,
                    jsonify)
+import pytz
 
 import db
 from profit_curve import generate_cost_matrix, generate_profit_curve
@@ -22,16 +23,21 @@ model = joblib.load('static/models/final_grad_boost.pkl')
 @application.route('/')
 def index_page():
     """
-    Test for bootstrap template.
+    Display the dashboard including roc and profit curve and
+    various other stats.
     """
     _, threshold, cost, revenue, maintenance, repair, time = db.fetch_all_threshold()
+    utc = pytz.timezone('UTC')
+    pacific = pytz.timezone('US/Pacific')
+    fixed_time = utc.localize(time).astimezone(pacific)
+    formatted_time = fixed_time.strftime('%Y-%m-%d %I:%M %p %Z')
     return render_template('index.html',
                            threshold=threshold,
                            cost=-cost,
                            revenue=revenue,
                            maintenance=-maintenance,
                            repair=-repair,
-                           time=time)
+                           time=formatted_time)
 
 
 @application.route('/unit_analysis')

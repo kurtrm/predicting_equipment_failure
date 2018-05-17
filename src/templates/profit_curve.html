@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block styling %}
+  <link href="{{ url_for('static', filename='css/profit_curve.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block title %}Cost-Benefit Analysis{% endblock %}
 
 {% block content %}
