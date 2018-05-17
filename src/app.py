@@ -4,15 +4,15 @@ Basic flask app to display D3 chart.
 import os
 
 import numpy as np
-from sklearn.externals import joblib
+import pytz
 from flask import (Flask,
                    render_template,
                    request,
                    jsonify)
-import pytz
+from sklearn.externals import joblib
 
-import db
-from profit_curve import generate_cost_matrix, generate_profit_curve
+from scripts import db
+from scripts.profit_curve import generate_cost_matrix, generate_profit_curve
 
 
 application = Flask(__name__)

@@ -1,8 +1,7 @@
 backcall==0.1.0
 click==6.7
 decorator==4.3.0
-Flask==1.0.2
-itsdangerous==0.24
+Flask==1.0.2itsdangerous==0.24
 Jinja2==2.10
 MarkupSafe==1.0
 numpy==1.14.3
