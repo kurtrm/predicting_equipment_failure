@@ -129,9 +129,14 @@
   };
 
   $(document).ready(function() {
+    $(".assessment-card").hide()
     $("button#calculate").click(function() {
+      $(".assessment-card").show()
       $(".assess-box").children("button").remove();
       $("p#assessment").text("Loading...")
+      $("html, body").animate({
+        scrollTop: "+=100"},
+        100);
       let metrics = get_metrics();
       send_metrics(metrics);
     })
@@ -158,13 +163,14 @@
   };
 
   function statement(data) {
-    var threshold = $("text.max_thresh").text();
-    var threshold_statement = threshold + " is the optimal threshold for the given revenue, maintenance, and repair costs. Would you like to save this threshold?"
+    var threshold = parseFloat($("text.max_thresh").text()) * 100;
+    var threshold_statement = threshold + "% is the optimal threshold for the given revenue, maintenance, and repair costs. Would you like to save this threshold?"
     $("p#assessment").text(threshold_statement)
-    var cancel = $('<button type="button" class="btn btn-danger id=cancel">Cancel</button>').click(function() {
+    var cancel = $('<button type="button" class="btn btn-danger mr-3" id="cancel">Cancel</button>').click(function() {
+      $(".assessment-card").hide()
       $(".assess-box").empty().append('<p id="assessment"></p>')
     });
-    var save = $('<button type="button" class="btn btn-success id=save">Save</button>').click(function() {
+    var save = $('<button type="button" class="btn btn-success ml-3" id="save">Save</button>').click(function() {
       $.ajax({
         url: '/save_profit_curve',
         contentType: "application/json; charset=utf-8",
