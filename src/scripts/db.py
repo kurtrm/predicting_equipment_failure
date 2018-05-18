@@ -135,3 +135,16 @@ def fetch_map_data() -> None:
     conn.close()
 
     return fetched
+
+
+def fetch_precision_recall_data() -> None:
+    """
+    Get all the data to display precision recall.
+    """
+    conn = pg2.connect(**my_params)
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM precision_recall;')
+    fetched = cur.fetchall()
+    conn.close()
+
+    return fetched

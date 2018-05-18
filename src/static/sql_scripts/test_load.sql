@@ -95,3 +95,14 @@ CREATE TABLE IF NOT EXISTS profit_curve
 
 COPY profit_curve(loss, threshold)
 FROM '/mnt/c/Users/kurtrm/projects/predicting_equipment_failure/src/static/data/thresh_losses.csv' CSV HEADER;
+
+CREATE TABLE IF NOT EXISTS precision_recall
+(
+  id serial NOT NULL,
+  precision REAL,
+  recall REAL
+);
+
+COPY precision_recall(precision, recall)
+FROM '/mnt/c/Users/kurtrm/projects/predicting_equipment_failure/src/static/data/precision_recall.csv' CSV HEADER;
+
