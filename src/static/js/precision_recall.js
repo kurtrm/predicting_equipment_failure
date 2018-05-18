@@ -46,8 +46,8 @@
      .append("text")
        .attr("class", "axis-title")
        .attr("transform", "rotate(-90)")
-       .attr("y", -40)
-       .attr("dy", ".71em")
+       .attr("y", -37)
+       .attr("dy", ".91em")
        .attr("x", -height/2 + 40)
        .attr("dx", ".71em")
        .style("text-anchor", "end")
@@ -68,6 +68,15 @@
              .attr("stroke-dashoffset", function(d){
               return this.getTotalLength()
              });
+
+    g.append("text")
+        .attr("class", "average_precision")
+        .attr("x", x(.35))
+        .attr("dx", "2em")
+        .attr("y", y(1.05))
+        .style("text-anchor", "end")
+        .style("font-size", "12px")
+        .text("Average precision: .837");
 
     g.selectAll(".line")
       .transition()
