@@ -1,7 +1,10 @@
 """
 Various functions that compute metrics on the model.
 """
-from sklearn.metrics import roc_auc_score, precision_recall_fscore_support, accuracy_score
+from sklearn.metrics import (roc_auc_score,
+                             precision_recall_fscore_support,
+                             accuracy_score,
+                             precision_recall_curve)
 from sklearn.externals import joblib
 import numpy as np
 

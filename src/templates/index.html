@@ -82,7 +82,7 @@
       <div class="card-header">
         <i class="fa fa-bullseye"></i> Precision vs. Recall</div>
       <div class="card-body">
-        <canvas id="myPieChart" width="100%" height="100"></canvas>
+        <svg id="precision_recall" width="300" height="250"></svg>
       </div>
     </div>
   </div>
@@ -92,4 +92,5 @@
 {% block scripts %}
   <script src="{{url_for('static', filename='js/index_profit_curve.js')}}"></script>
   <script src="{{url_for('static', filename='js/line_chart.js')}}"></script>
+  <script src="{{url_for('static', filename='js/precision_recall.js')}}"></script>
 {% endblock %}

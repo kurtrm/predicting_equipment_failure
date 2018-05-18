@@ -171,6 +171,16 @@ def save_profit_curve():
     return '200 OK'
 
 
+@application.route('/precision_recall', methods=['GET'])
+def retrieve_precision_recall():
+    """
+    Get the precision recall data.
+    """
+    fetched = db.fetch_precision_recall_data()
+    return jsonify([{'precision': precision, 'recall': recall}
+                    for _, precision, recall in fetched])
+
+
 @application.route('/map_data', methods=['GET'])
 def get_map_data():
     """
