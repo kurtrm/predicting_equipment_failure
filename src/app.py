@@ -78,11 +78,11 @@ def transformer_prediction():
             listy.append(True)
         else:
             listy.append(False)
-    fetched = db.select_threshold()
-    threshold = fetched[0]
+    ajax_threshold = data.get("threshold")
+    threshold = float(ajax_threshold) / 100 if ajax_threshold else db.select_threshold()[0]
     probs = model.predict_proba(np.array(listy).reshape(1, -1))[:, 1]
 
-    return jsonify({'threshold': f'{threshold}',
+    return jsonify({'threshold': f'{threshold * 100}',
                     'probability': f'{probs[0] * 100:.2f}'})
 
 
