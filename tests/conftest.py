@@ -1,11 +1,18 @@
 """
 Test fixtures.
 """
-import pytest
+# import pytest
+# from flask import flask
+# from flask_testing import TestCase
 
-from src import app, db
+# from src.app import application
 
-@pytest.fixture
-def create_app():
-    import pdb; pdb.set_trace()
-    return app.config.from_object('project.config.TestingConfig')
+
+# class MyTest(TestCase):
+
+#     def create_app(self):
+
+#         application.config['TESTING'] = True
+#         return application
+
+
