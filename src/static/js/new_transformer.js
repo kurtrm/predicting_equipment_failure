@@ -6,6 +6,7 @@
     let get_form_inputs = function() {
         let veg = $("input:checked");
         let age = $("input#Age").val();
+        let threshold = localStorage.getItem("threshold");
         var inputs = {}
         for (let i = 0; i < veg.length; i++) {
             if (i <= 4) {
@@ -15,6 +16,7 @@
             };
         };
         inputs["Age"] = age;
+        inputs["threshold"] = threshold;
         return inputs;
     }
 
@@ -59,6 +61,7 @@
         } else {
             $(".invalid-tooltip").hide();
         };
+
         send_form_inputs(inputs);
     });
 })(window, document);
