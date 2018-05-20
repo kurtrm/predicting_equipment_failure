@@ -77,3 +77,11 @@ def test_home_content(my_app):
                                                      pytest.approx(precision, .1),
                                                      pytest.approx(recall, .1),
                                                      pytest.approx(f1, .1)]
+
+
+def test_unit_analysis(my_app):
+    """
+    """
+    with my_app.test_client() as client:
+        response = client.get('/unit_analysis')
+    assert response.status_code == 200
