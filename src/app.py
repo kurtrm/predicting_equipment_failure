@@ -209,7 +209,7 @@ def data_exploration():
     return render_template('data_exploration.html')
 
 
-@application.route('notebooks/rigorous_modeling')
+@application.route('/notebooks/rigorous_modeling')
 def rigorous_modeling():
     """
     Render the rigorous_modeling notebook.
@@ -217,12 +217,12 @@ def rigorous_modeling():
     return render_template('rigorous_modeling.html')
 
 
-@application.route('notebooks/final_characteristics')
+@application.route('/notebooks/final_characteristics')
 def final_characteristics():
     """
     Render the final model characteristics notebook.
     """
-    return render_template('final_model_characteristics')
+    return render_template('final_model_characteristics.html')
 
 
 if __name__ == '__main__':
