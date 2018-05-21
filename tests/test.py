@@ -71,3 +71,37 @@ def test_unit_analysis(my_app):
     with my_app.test_client() as client:
         response = client.get('/unit_analysis')
     assert response.status_code == 200
+
+
+def test_profit_curve(my_app):
+    """
+    Test the profit curve route 200.
+    """
+    with my_app.test_client() as client:
+        response = client.get('/profit_curve')
+    assert response.status_code == 200
+
+
+def test_show_map(my_app):
+    """
+    Test show map route 00.
+    """
+    with my_app.test_client() as client:
+        response = client.get('/map')
+    assert response.status_code == 200
+
+
+def test_notebook_routes(my_app):
+    """
+    Test all notebook routes.
+    """
+    with my_app.test_client() as client:
+        list_response = client.get('/notebooks')
+        data_exp_response = client.get('/notebooks/data_exploration')
+        modeling_response = client.get('/notebooks/rigorous_modeling')
+        char_response = client.get('/notebooks/final_characteristics')
+    assert all(response.status_code == 200
+               for response in [list_response,
+                                data_exp_response,
+                                modeling_response,
+                                char_response])
