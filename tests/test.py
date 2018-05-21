@@ -8,7 +8,6 @@ from bs4 import BeautifulSoup
 from selenium.webdriver import Chrome
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
-# from flask_testing import TestCase, LiveServerTestCase
 from scripts.model_metrics import precision_recall_f1, get_auc_score
 
 from app import application
@@ -30,21 +29,7 @@ def driver():
     browser = Chrome(executable_path=windows_driver,
                      chrome_options=options)
     return browser
-# class TestServer(LiveServerTestCase):
 
-#     def create_app(self):
-
-#         application.config['TESTING'] = True
-#         application.config['LIVESERVER_TIMEOUT'] = 10
-#         return application
-
-#     def test_server(self):
-#         response = requests.get(self.get_server_url())
-#         self.assertEqual(response.status_code, 200)
-
-
-# if __name__ == '__main__':
-#     unittest.main()
 
 def test_home_response(my_app):
     with my_app.test_client() as client:
