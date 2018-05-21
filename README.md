@@ -1,4 +1,4 @@
-# predicting_equipment_failure
+# Predicting Equipment Failure
 ---
 ### Description
 Version: *0.0*
