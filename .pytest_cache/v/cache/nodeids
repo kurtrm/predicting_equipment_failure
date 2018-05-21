@@ -1,0 +1,6 @@
+[
+  "tests/test.py::test_home_response",
+  "tests/test.py::test_dummy_check",
+  "tests/test.py::test_home_content",
+  "tests/test.py::test_unit_analysis"
+]
