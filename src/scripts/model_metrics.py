@@ -3,8 +3,7 @@ Various functions that compute metrics on the model.
 """
 from sklearn.metrics import (roc_auc_score,
                              precision_recall_fscore_support,
-                             accuracy_score,
-                             precision_recall_curve)
+                             accuracy_score)
 from sklearn.externals import joblib
 import numpy as np
 
@@ -32,7 +31,9 @@ def precision_recall_f1():
     """
     Wraps sklearn's precision_recall_f1_support function.
     """
-    return precision_recall_fscore_support(y_test, y_threshold_score, average='binary')
+    return precision_recall_fscore_support(y_test,
+                                           y_threshold_score,
+                                           average='binary')
 
 
 def accuracy():

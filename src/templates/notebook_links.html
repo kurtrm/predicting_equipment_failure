@@ -1,0 +1,11 @@
+{% extends base.html %}
+
+{% block title %}Notebooks{% endblock %}
+
+{% block content %}
+<ul>
+    <li><a href="{{ url_for('data_exploration') }}">Data Exploration</a></li>
+    <li><a href="{{ url_for('rigorous_modeling') }}"></a>Modeling</li>
+    <li><a href="{{ url_for('final_model_characteristics') }}">Final Touches</a></li>
+</ul>
+{% endblock %}
