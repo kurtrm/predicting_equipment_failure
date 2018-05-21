@@ -10,11 +10,12 @@
   <title>Transformer Analytics Application</title>
   <!-- Bootstrap core CSS-->
   <script src="https://d3js.org/d3.v4.min.js"></script>
-  <link href="{{url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/transformer.png') }}" />
+  <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
   <!-- Custom fonts for this template-->
-  <link href="{{url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+  <link href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
-  <link href="{{url_for('static', filename='css/sb-admin.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/sb-admin.css') }}" rel="stylesheet">
   {% block styling %}
   {% endblock %}
 </head>
@@ -97,12 +98,12 @@
       <i class="fa fa-angle-up"></i>
     </a>
    <!-- Bootstrap core JavaScript-->
-    <script src="{{url_for('static', filename='vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- Core plugin JavaScript-->
-    <script src="{{url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
     <!-- Custom scripts for all pages-->
-    <script src="{{url_for('static', filename='js/sb-admin.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/sb-admin.min.js') }}"></script>
     <!-- Custom scripts for this page-->
     {% block scripts %}
     {% endblock %}
