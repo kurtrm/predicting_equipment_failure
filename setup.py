@@ -3,7 +3,7 @@ from setuptools import setup
 
 
 extra_packages = {
-    'testing': ['pytest']
+    'testing': ['pytest', 'selenium', 'bs4', 'requests']
 }
 
 description = '''Project leveraging machine learning to help determine if
