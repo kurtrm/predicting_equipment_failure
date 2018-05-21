@@ -193,5 +193,37 @@ def get_map_data():
                     for _, latitude, longitude, status in fetched])
 
 
+@application.route('/notebooks')
+def render_notebook_links():
+    """
+    Renders links to other notebooks.
+    """
+    return render_template('notebook_links.html')
+
+
+@application.route('/notebooks/data_exploration')
+def data_exploration():
+    """
+    Render data exploration notebook.
+    """
+    return render_template('data_exploration.html')
+
+
+@application.route('notebooks/rigorous_modeling')
+def rigorous_modeling():
+    """
+    Render the rigorous_modeling notebook.
+    """
+    return render_template('rigorous_modeling.html')
+
+
+@application.route('notebooks/final_characteristics')
+def final_characteristics():
+    """
+    Render the final model characteristics notebook.
+    """
+    return render_template('final_model_characteristics')
+
+
 if __name__ == '__main__':
     application.run(host='0.0.0.0', port=8080, debug=True)

@@ -66,6 +66,7 @@ def test_home_content(my_app):
 
 def test_unit_analysis(my_app):
     """
+    Test the unit analysis page.
     """
     with my_app.test_client() as client:
         response = client.get('/unit_analysis')
