@@ -3,8 +3,8 @@
 ### Description
 Version: *0.0*
 
-* For an overview of the project, see the [overfiew](https://github.com/kurtrm/predicting_equipment_failure/blob/master/overview.md)
-* The final deployment dashboard can be seen [here](transformers.kurtrm.com) 
+* For an overview of the project, see the [overfiew](https://github.com/kurtrm/predicting_equipment_failure/blob/master/overview.md) markdown file.
+* The final deployment dashboard can be seen [here](transformers.kurtrm.com).
 
 ### Authors
 ---
@@ -36,7 +36,7 @@ First, clone the project repo from Github. Then, change directories into the clo
 
 `$ cd predicting_equipment_failure`
 
-Now now that you have cloned your repo and changed directories into the project, create a virtual environment named "ENV", and install the project requirements into your VE.
+Now that you have cloned your repo and changed directories into the project, create a virtual environment named "ENV", and install the project requirements into your VE.
 (Or your preferred environment manager.)
 
 `$ python3 -m venv ENV`
@@ -44,6 +44,7 @@ Now now that you have cloned your repo and changed directories into the project,
 `$ source ENV/bin/activate`
 
 `$ pip install -r requirements.txt`
+
 ### Test Suite
 ---
 ##### *Running Tests*
@@ -51,6 +52,7 @@ This application uses [pytest](https://docs.pytest.org/en/latest/) as a testing 
 
 Until a config file is made, execute the following:
 ``$ cd src``
+
 ``$ pytest ../tests/test.py``
 
 To view test coverage, add ``--cov`` to the above command.
