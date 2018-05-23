@@ -20,6 +20,19 @@ y_score = model.predict_proba(X_test)[:, 1]
 y_threshold_score = threshold_prediction(model, X_test, threshold)
 
 
+def alt_prec_rec_f1(threshold):
+    """
+    Calculate scores using different threshold.
+    """
+    fetched = db.fetch_test_data()
+    test_set = np.array(fetched)[:, 1:]
+    X_test, y_test = test_set[:, :-1], test_set[:, -1]
+    y_threshold_score = threshold_prediction(model, X_test, threshold)
+    return precision_recall_fscore_support(y_test,
+                                           y_threshold_score,
+                                           average='binary')
+
+
 def get_auc_score():
     """
     Use sklearn roc_auc_score to compute auc.

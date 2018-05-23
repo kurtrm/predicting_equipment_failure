@@ -32,6 +32,9 @@ if (localStorage.getItem("data") === null) {
   var cost = JSON.parse(localStorage["cost"]);
   var metrics = JSON.parse(localStorage["metrics"]);
   var time = JSON.parse(localStorage["rightNow"]);
+  var precision = JSON.parse(localStorage["precision"]);
+  var recall = JSON.parse(localStorage["recall"]);
+  var f1 = JSON.parse(localStorage["f1"]);
   var revenue = metrics["user_input"][0];
   var maintenance = metrics["user_input"][1];
   var repair = metrics["user_input"][2];
@@ -41,6 +44,9 @@ if (localStorage.getItem("data") === null) {
   $("#maintenance").html("-$" + -maintenance);
   $("#repair").html("-$" + -repair);
   $("#time").html(time);
+  $("#precision").html(precision);
+  $("#recall").html(recall);
+  $("#f1").html(f1);
   draw(storage);
 };
 
