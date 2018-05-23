@@ -13,7 +13,7 @@ from sklearn.externals import joblib
 
 from scripts import db
 from scripts.profit_curve import generate_cost_matrix, generate_profit_curve
-from scripts.model_metrics import get_auc_score, precision_recall_f1
+from scripts.model_metrics import get_auc_score, precision_recall_f1, alt_prec_rec_f1
 
 
 application = Flask(__name__)
@@ -154,6 +154,18 @@ def roc_table_retrieval():
     fetched = db.get_roc_data()
     return jsonify([{'fpr': fpr, 'lin': lin, 'thresh': thresh, 'tpr': tpr}
                     for _, fpr, lin, thresh, tpr in fetched])
+
+
+@application.route('/calculate_metrics', methods=['POST'])
+def calculate_metrics():
+    """
+    Calculate metrics and send them back to front end.
+    """
+    data = request.json
+    precision, recall, f1, _ = alt_prec_rec_f1(data['threshold'] / 100)
+    return jsonify({'precision': f'{precision:.2f}',
+                    'recall': f'{recall:.2f}',
+                    'f1': f'{f1:.2f}'})
 
 
 @application.route('/save_profit_curve', methods=['POST'])
