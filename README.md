@@ -4,7 +4,7 @@
 Version: *0.0*
 
 * For an overview of the project, see the [overview](https://github.com/kurtrm/predicting_equipment_failure/blob/master/overview.md) markdown file.
-* The final deployment dashboard can be seen [here](transformers.kurtrm.com).
+* The final deployment dashboard can be seen [here](http://transformers.kurtrm.com).
 
 ### Authors
 ---
