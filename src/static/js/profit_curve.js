@@ -182,7 +182,6 @@ function draw(data) {
       localStorage.setItem('metrics', JSON.stringify(get_metrics()));
       localStorage.setItem('cost', JSON.stringify(d3.max(data, d => d.loss)));
       localStorage.setItem('rightNow', JSON.stringify(new Date()));
-      // location.reload();
       $.ajax({
         url: '/calculate_metrics',
         contentType: "application/json; charset=utf-8",
@@ -194,6 +193,7 @@ function draw(data) {
           localStorage.setItem("precision", JSON.stringify(data['precision']));
           localStorage.setItem("recall", JSON.stringify(data['recall']));
           localStorage.setItem("f1", JSON.stringify(data['f1']));
+          location.reload();
         }
       })
       // This code saved for posterity. This makes an ajax request to save data to a database.
