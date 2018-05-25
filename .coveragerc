@@ -1,0 +1,12 @@
+[run]
+source = 
+    tests
+omit = 
+    src/__init__.py
+    src/scripts
+    src/static
+    src/templates
+    src/wsgi.py
+
+[report]
+show_missing = True

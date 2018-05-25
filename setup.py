@@ -3,7 +3,7 @@ from setuptools import setup
 
 
 extra_packages = {
-    'testing': ['pytest', 'selenium', 'bs4', 'requests']
+    'testing': ['pytest', 'selenium', 'bs4', 'requests', 'pytest-cov']
 }
 
 description = '''Project leveraging machine learning to help determine if
@@ -15,6 +15,12 @@ setup(
     version=0.0,
     author='Kurt Maurer',
     author_email='kurtrm@gmail.com',
-    install_requires=['numpy', 'pytz', 'pandas', 'sklearn', 'flask', 'psycopg2', 'scipy'],
+    install_requires=['numpy',
+                      'pytz',
+                      'pandas',
+                      'sklearn',
+                      'flask',
+                      'psycopg2',
+                      'scipy'],
     extras_require=extra_packages
 )
