@@ -1,9 +1,1 @@
-[
-  "tests/test.py::test_home_response",
-  "tests/test.py::test_dummy_check",
-  "tests/test.py::test_home_content",
-  "tests/test.py::test_unit_analysis",
-  "tests/test.py::test_profit_curve",
-  "tests/test.py::test_show_map",
-  "tests/test.py::test_notebook_routes"
-]
+[]

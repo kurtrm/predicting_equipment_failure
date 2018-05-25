@@ -1,0 +1,14 @@
+[run]
+source = 
+    .
+
+omit = 
+    __init__.py
+    scripts/*
+    static/*
+    templates/*
+    tests/*
+    wsgi.py
+
+[report]
+show_missing = True
