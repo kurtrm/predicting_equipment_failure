@@ -12,6 +12,6 @@ install:
 before_script:
   - cd src
 script: 
-  - pytest ../tests --cov=src
+  - pytest tests/test.py --cov=src
 after_success:
   - coveralls
